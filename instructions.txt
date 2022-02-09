@@ -1,0 +1,16 @@
+
+You will implement and experiment with (a) a random forest and (b) a Support Vector Machine (SVM)
+with datasets from your first project and the additional datasets provided for this project.  
+You can work in groups of 2 for this project.   One of the two algorithm implementation and report 
+must be submitted by the end of next week and the implementation of the other algorithm as well as 
+the combined report is due by the deadline specified.
+
+The dataset.zip file includes two 2-D datasets, corresponding visualizations, and a python script to 
+generate your own dataset.
+
+The double spirals data generator is a python version of function "mlbench.spirals" from R package 
+"mlbench". A simple documentation can be found: 
+https://www.rdocumentation.org/packages/mlbench/versions/2.1-1/topics/mlbench.spirals
+
+The blobs data generator is based on multivariate normal distribution. It can generate high-dimensional dataset.
+The current code will generate balanced datasets, you could under/over-sample some classes to get an imbalanced one.
