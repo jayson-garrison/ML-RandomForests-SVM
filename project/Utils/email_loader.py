@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from Utils.Sample import Sample
+from Utils.Attribute import Attribute
 
 
 def load_email_data():

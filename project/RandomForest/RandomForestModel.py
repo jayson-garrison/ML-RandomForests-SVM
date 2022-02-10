@@ -3,7 +3,8 @@ from scipy import stats
 import numpy as np
 
 class RandomForestModel(Model):
-    def __init__(self):
+    def __init__(self, H='entropy'):
+        self.H = H
         super().__init__()
 
 
@@ -36,6 +37,13 @@ class RandomForestModel(Model):
 
 
     def learn_decision_tree(self, examples, attributes, parent_examples):
+        """
+            @param: examples - a list of Sample objects
+            @param: attributes - a set of integer values
+            @param: parent_examples - a list of Sample objects
+
+            @return: a tree
+        """
         
         if len(examples) == 0: 
             return self.plurality_value(parent_examples)
@@ -45,13 +53,13 @@ class RandomForestModel(Model):
             return self.plurality_value(examples)
         else:
             # TODO 
-            # Follow the algorithm outlined on slide 9 of SupervisedLerningDecisionTrees ppt
+            # Follow the algorithm outlined on slide 9 of SupervisedLearningDecisionTrees ppt
             return -1
         
 
     def plurality_value(self, examples):
         labels = np.array([sample.getLabel() for sample in examples])
-        return stats.mode(labels)[0]
+        return stats.mode(labels, axis=None)[0][0]
 
 
     def is_homogenous(self, examples):
@@ -60,7 +68,83 @@ class RandomForestModel(Model):
             if label != sample.getLabel():
                 return False
         return True
+
+    
+    def entropy(attribute, samples, threshold):
+        # TODO check these computations
+        # sort the samples into bins by their value for the attribute
+        above_samples = set()
+        above_class_cts = dict()
+        below_samples = set()
+        below_class_cts = dict()
+        for s in samples:
+            if s.getValue(attribute.getName()) > threshold:
+                above_samples.add(s)
+                c = s.getClassification()
+                if c not in above_class_cts:
+                    above_class_cts[c] = 0
+                above_class_cts[c] += 1
+            else:
+                below_samples.add(s)
+                c = s.getClassification()
+                if c not in below_class_cts:
+                    below_class_cts[c] = 0
+                below_class_cts[c] += 1
+
+        # now bins has the counts for each value, run entropy calculating p
+        N = len(samples)
+        atot = 0
+        na = len(above_samples)
+        for c in above_class_cts:
+            pcabove = above_class_cts[c] / na
+            atot += pcabove * math.log2(pcabove)
+        btot = 0
+        nb = len(below_samples)
+        for c in below_class_cts:
+            pcbelow = below_class_cts[c] / nb
+            btot += pcbelow * math.log2(pcbelow)
         
+        weighted_total = atot * (na/N) + btot * (nb/N)
+        
+        return weighted_total
+
+
+    def gini(attribute, samples, threshold):
+        # sort the samples into bins by their value for the attribute
+        above_samples = set()
+        above_class_cts = dict()
+        below_samples = set()
+        below_class_cts = dict()
+        for s in samples:
+            if s.getValue(attribute.getName()) > threshold:
+                above_samples.add(s)
+                c = s.getClassification()
+                if c not in above_class_cts:
+                    above_class_cts[c] = 0
+                above_class_cts[c] += 1
+            else:
+                below_samples.add(s)
+                c = s.getClassification()
+                if c not in below_class_cts:
+                    below_class_cts[c] = 0
+                below_class_cts[c] += 1
+
+        # now bins has the counts for each value, run entropy calculating p
+        N = len(samples)
+        atot = 0
+        na = len(above_samples)
+        for c in above_class_cts:
+            pcabove = above_class_cts[c] / na
+            atot += pcabove * (1 - pcabove)
+        btot = 0
+        nb = len(below_samples)
+        for c in below_class_cts:
+            pcbelow = below_class_cts[c] / nb
+            btot += pcbelow * (1 - pcbelow)
+        
+        weighted_total = atot * (na/N) + btot * (nb/N)
+
+        return -1* weighted_total
 
 
 
