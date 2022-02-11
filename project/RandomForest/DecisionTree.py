@@ -1,6 +1,6 @@
-from Classification import *
+from RandomForest.Classification import *
 
-class Decision_Tree:
+class DecisionTree:
     # Each subtree is another DecisionTree, except leaf nodes which are Classification objects
     def __init__(self, children=None, attribute=None, label="ROOT-", threshold=None):
         self.children = children if children else set()
@@ -39,6 +39,22 @@ class Decision_Tree:
 
     def setThreshold(self, t):
         self.threshold = t
+
+    
+    def test_a_point(self, sample):
+        # Put a point into the tree, whether the classification was correct or not
+        node = self
+        while not isinstance(node, Classification):
+            attr = node.getAttribute().getName()
+            for child in node.getChildren():
+                if (sample.getX()[attr] > child.getThreshold()) and (child.getLabel()=="ABOVE"):
+                    node = child
+                    break
+                elif (sample.getX()[attr] <= child.getThreshold()) and (child.getLabel()=="BELOW"):
+                    node = child
+                    break
+            
+        return node.getClass()==sample.getLabel()
 
 
     def pretty_print_tree(self, node=None, prefix="", last=True):
