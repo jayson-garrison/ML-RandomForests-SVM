@@ -1,12 +1,16 @@
 from Utils.Model import Model
-from Classification import *
+from Utils.Attribute import Attribute
+from Utils.helper_functions import *
+from RandomForest.Classification import *
+from RandomForest.DecisionTree import *
 from scipy import stats
 import numpy as np
 
 class RandomForestModel(Model):
-    def __init__(self, H='entropy'):
+    def __init__(self, H=entropy, maxTreeDepth=1):
         self.H = H
         self.forest = list()
+        self.maxTreeDepth = maxTreeDepth
         super().__init__()
 
 
@@ -38,10 +42,10 @@ class RandomForestModel(Model):
         return -1
 
 
-    def learn_decision_tree(self, examples, attributes, parent_examples):
+    def learn_decision_tree(self, examples, attributes, parent_examples, current_depth=0):
         """
             @param: examples - a list of Sample objects
-            @param: attributes - a set of integer values
+            @param: attributes - a list of Attribute objects
             @param: parent_examples - a list of Sample objects
 
             @return: a tree
@@ -52,10 +56,42 @@ class RandomForestModel(Model):
             return examples[0].getLabel()
         elif len(attributes) == 0:
             return self.plurality_value(examples)
+        elif current_depth == self.maxTreeDepth:
+            return self.plurality_value(examples)
         else:
-            # TODO 
-            # Follow the algorithm outlined on slide 9 of SupervisedLearningDecisionTrees ppt
-            return -1
+            A, threshold = argmax(self.H, attributes, examples)
+            tree = DecisionTree(attribute=A)
+
+            # Sort data based on above and below threshold
+            above_samples = list()
+            below_samples = list()
+            for sample in examples:
+                if sample.getX()[A.getName()] > threshold:
+                    above_samples.append(sample)
+                else:
+                    below_samples.append(sample)
+            
+            # Make recursive call for each subset (without considering the attribute already split on)
+            next_attributes = [a for a in attributes if a.getName() != A.getName()]
+
+            # First the above values
+            subtreea = self.learn_decision_tree(above_samples, next_attributes, examples, current_depth=current_depth+1)
+            if not isinstance(subtreea, DecisionTree):
+                subtreea = Classification(c=subtreea, label="ABOVE", threshold=threshold)
+            subtreea.setLabel(f"ABOVE")
+            subtreea.setThreshold(threshold)
+            tree.addChild(subtreea)
+
+            # Now the below values
+            subtreeb = self.learn_decision_tree(below_samples, next_attributes, examples, current_depth=current_depth+1)
+            if not isinstance(subtreeb, DecisionTree):
+                subtreeb = Classification(c=subtreeb, label="BELOW", threshold=threshold)
+            subtreeb.setLabel(f"BELOW")
+            subtreeb.setThreshold(threshold)
+            tree.addChild(subtreeb)
+
+            return tree
+
         
 
     def plurality_value(self, examples):
@@ -71,97 +107,7 @@ class RandomForestModel(Model):
         return True
 
     
-    def entropy(attribute, samples, threshold):
-        # TODO check these computations
-        # sort the samples into bins by their value for the attribute
-        above_samples = set()
-        above_class_cts = dict()
-        below_samples = set()
-        below_class_cts = dict()
-        for s in samples:
-            if s.getValue(attribute.getName()) > threshold:
-                above_samples.add(s)
-                c = s.getClassification()
-                if c not in above_class_cts:
-                    above_class_cts[c] = 0
-                above_class_cts[c] += 1
-            else:
-                below_samples.add(s)
-                c = s.getClassification()
-                if c not in below_class_cts:
-                    below_class_cts[c] = 0
-                below_class_cts[c] += 1
-
-        # now bins has the counts for each value, run entropy calculating p
-        N = len(samples)
-        atot = 0
-        na = len(above_samples)
-        for c in above_class_cts:
-            pcabove = above_class_cts[c] / na
-            atot += pcabove * math.log2(pcabove)
-        btot = 0
-        nb = len(below_samples)
-        for c in below_class_cts:
-            pcbelow = below_class_cts[c] / nb
-            btot += pcbelow * math.log2(pcbelow)
-        
-        weighted_total = atot * (na/N) + btot * (nb/N)
-        
-        return weighted_total
-
-
-    def gini(attribute, samples, threshold):
-        # sort the samples into bins by their value for the attribute
-        above_samples = set()
-        above_class_cts = dict()
-        below_samples = set()
-        below_class_cts = dict()
-        for s in samples:
-            if s.getValue(attribute.getName()) > threshold:
-                above_samples.add(s)
-                c = s.getClassification()
-                if c not in above_class_cts:
-                    above_class_cts[c] = 0
-                above_class_cts[c] += 1
-            else:
-                below_samples.add(s)
-                c = s.getClassification()
-                if c not in below_class_cts:
-                    below_class_cts[c] = 0
-                below_class_cts[c] += 1
-
-        # now bins has the counts for each value, run entropy calculating p
-        N = len(samples)
-        atot = 0
-        na = len(above_samples)
-        for c in above_class_cts:
-            pcabove = above_class_cts[c] / na
-            atot += pcabove * (1 - pcabove)
-        btot = 0
-        nb = len(below_samples)
-        for c in below_class_cts:
-            pcbelow = below_class_cts[c] / nb
-            btot += pcbelow * (1 - pcbelow)
-        
-        weighted_total = atot * (na/N) + btot * (nb/N)
-
-        return -1* weighted_total
-
     
-    def test_a_point(decision_tree, sample):
-        # Put a point into the tree, whether the classification was correct or not
-        node = decision_tree
-        while not isinstance(node, Classification):
-            attr = node.getAttribute().getName()
-            for child in node.getChildren():
-                if (sample.getValue(attr) > child.getThreshold()) and (child.getLabel()=="ABOVE"):
-                    node = child
-                    break
-                elif (sample.getValue(attr) <= child.getThreshold()) and (child.getLabel()=="BELOW"):
-                    node = child
-                    break
-            
-        return node.getClass()==sample.getClassification()
 
     
 
