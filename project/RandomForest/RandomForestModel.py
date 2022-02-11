@@ -1,10 +1,12 @@
 from Utils.Model import Model
+from Classification import *
 from scipy import stats
 import numpy as np
 
 class RandomForestModel(Model):
     def __init__(self, H='entropy'):
         self.H = H
+        self.forest = list()
         super().__init__()
 
 
@@ -27,10 +29,10 @@ class RandomForestModel(Model):
             k: the the number of trees in the forest
         """
         # TODO
+        # sample data for building a tree (bagging)
         # Call learn_decision_tree()
         # Add tree to forest
-        # Bag new data
-        # Repeat
+        # Repeat k times
 
         # NOTE: this could be parallelized, but idc
         return -1
@@ -44,7 +46,6 @@ class RandomForestModel(Model):
 
             @return: a tree
         """
-        
         if len(examples) == 0: 
             return self.plurality_value(parent_examples)
         elif self.is_homogenous(examples):
@@ -146,6 +147,23 @@ class RandomForestModel(Model):
 
         return -1* weighted_total
 
+    
+    def test_a_point(decision_tree, sample):
+        # Put a point into the tree, whether the classification was correct or not
+        node = decision_tree
+        while not isinstance(node, Classification):
+            attr = node.getAttribute().getName()
+            for child in node.getChildren():
+                if (sample.getValue(attr) > child.getThreshold()) and (child.getLabel()=="ABOVE"):
+                    node = child
+                    break
+                elif (sample.getValue(attr) <= child.getThreshold()) and (child.getLabel()=="BELOW"):
+                    node = child
+                    break
+            
+        return node.getClass()==sample.getClassification()
+
+    
 
 
     
