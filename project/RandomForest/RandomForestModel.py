@@ -1,4 +1,3 @@
-from attr import attr
 from Utils.Model import Model
 from Utils.Attribute import Attribute
 from Utils.helper_functions import *
@@ -36,6 +35,7 @@ class RandomForestModel(Model):
             k: the the number of trees in the forest
         """
         for i in range(k):
+            print(f'Constructing tree {i}')
             # sample data for building a tree (bagging)
             bag = create_bag(training_data, len(training_data))
             sample_attributes = select_attributes(attributes, int(math.sqrt(len(attributes))))

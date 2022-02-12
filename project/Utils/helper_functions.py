@@ -13,7 +13,6 @@ def argmax(evaluation_function, attributes, samples):
     chosen_attr = attributes[0]
     chosen_threshold = 0
     all_entropies = list()
-    print("ENTERING ARGMAX")
     for attribute in attributes: 
         for thr in attribute.getValues():
             r = evaluation_function(attribute, samples, thr)
@@ -23,7 +22,6 @@ def argmax(evaluation_function, attributes, samples):
                 m = r
                 chosen_attr = attribute
                 chosen_threshold = thr   
-    print("EXITING ARGMAX")
     return chosen_attr, chosen_threshold
 
 
@@ -113,6 +111,11 @@ def create_bag(samples, n):
     return bag
 
 def select_attributes(attributes, n):
+<<<<<<< HEAD
     sample_attributes = np.random.choice(attributes, n, replace=False)
     return sample_attributes
+=======
+    selected_attributes = np.random.choice(attributes, n, replace=False)
+    return selected_attributes
+>>>>>>> 39cab30be021cf6602a176d9552a5c0e5762e910
 
