@@ -24,8 +24,6 @@ def argmax(evaluation_function, attributes, samples):
                 chosen_threshold = thr   
     return chosen_attr, chosen_threshold
 
-<<<<<<< HEAD
-=======
 def misclassification(attribute, samples, threshold):
     # TODO check these computations
     # sort the samples into bins by their value for the attribute
@@ -65,7 +63,6 @@ def misclassification(attribute, samples, threshold):
         count = 0
 
     return 1 - max(values)
->>>>>>> main
 
 def entropy(attribute, samples, threshold):
     # TODO check these computations

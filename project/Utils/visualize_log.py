@@ -11,7 +11,7 @@ def visualize_log(log_file):
     data = pd.read_csv(log_file)
     data = data.to_numpy()
     X1 = data[:, 1:6]
-    Y = data[:, 0]
+    Y = np.array(list(range(100)))
     X2 = data[:, 6:-1]
 
     x_train = list()
