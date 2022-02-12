@@ -1,5 +1,6 @@
 import math
 import random as rand
+import numpy as np
 
 def argmax(evaluation_function, attributes, samples):
     """
@@ -110,4 +111,8 @@ def create_bag(samples, n):
     '''
     bag  = rand.choices(samples, k=n)
     return bag
+
+def sample_attributes(attributes, n):
+    sample_attributes = np.random.choice(attributes, n, replace=False)
+    pass
 
