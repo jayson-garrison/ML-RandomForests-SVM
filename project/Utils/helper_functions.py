@@ -24,45 +24,6 @@ def argmax(evaluation_function, attributes, samples):
                 chosen_threshold = thr   
     return chosen_attr, chosen_threshold
 
-def misclassification(attribute, samples, threshold):
-    # TODO check these computations
-    # sort the samples into bins by their value for the attribute
-    above_samples = set()
-    above_class_cts = dict()
-    below_samples = set()
-    below_class_cts = dict()
-    for sample in samples:
-        if sample.getX()[attribute.getName()] > threshold:
-            above_samples.add(sample)
-            c = sample.getLabel()
-            if c not in above_class_cts:
-                above_class_cts[c] = 0
-            above_class_cts[c] += 1
-        else:
-            below_samples.add(sample)
-            c = sample.getLabel()
-            if c not in below_class_cts:
-                below_class_cts[c] = 0
-            below_class_cts[c] += 1
-    values = list()
-    count = 0
-    
-    for possible in above_class_cts:
-        for item in above_samples:
-            if possible == item:
-                count += 1
-        values.append(count / len(above_samples))
-        count = 0
-
-    count = 0
-    for possible in below_class_cts:
-        for item in below_samples:
-            if possible == item:
-                count += 1
-        values.append(count / len(below_samples))
-        count = 0
-    
-    return 1 - max(values)
 
 def entropy(attribute, samples, threshold):
     # TODO check these computations
@@ -150,16 +111,6 @@ def create_bag(samples, n):
     return bag
 
 def select_attributes(attributes, n):
-<<<<<<< HEAD
     selected_attributes = np.random.choice(attributes, n, replace=False)
     return selected_attributes
-=======
-<<<<<<< HEAD
-    sample_attributes = np.random.choice(attributes, n, replace=False)
-    return sample_attributes
-=======
-    selected_attributes = np.random.choice(attributes, n, replace=False)
-    return selected_attributes
->>>>>>> 39cab30be021cf6602a176d9552a5c0e5762e910
->>>>>>> main
 
