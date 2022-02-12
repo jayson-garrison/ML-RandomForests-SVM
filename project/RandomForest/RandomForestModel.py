@@ -65,7 +65,7 @@ class RandomForestModel(Model):
         elif current_depth == self.maxTreeDepth:
             return self.plurality_value(examples)
         else:
-            A, threshold = argmax(self.H, attributes, examples)
+            A, threshold = argmax(self.H, attributes, examples, self.classes)
             tree = DecisionTree(attribute=A)
 
             # Sort data based on above and below threshold
