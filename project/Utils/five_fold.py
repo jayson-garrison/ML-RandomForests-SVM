@@ -9,7 +9,6 @@ GitHub: https://github.com/jayson-garrison/ML-Naive-Bayes
 # five fold data partition
 def five_fold(data_set):
     partition_index = int( len(data_set) / 5 )
-    print('pdex: ', partition_index) 
     s = 0
     fold = []
     for i in range(5): #0-4
