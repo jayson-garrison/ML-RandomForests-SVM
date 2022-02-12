@@ -46,7 +46,7 @@ def misclassification(attribute, samples, threshold):
             below_class_cts[c] += 1
     values = list()
     count = 0
-    
+
     for possible in above_class_cts:
         for item in above_samples:
             if possible == item:
@@ -61,7 +61,7 @@ def misclassification(attribute, samples, threshold):
                 count += 1
         values.append(count / len(below_samples))
         count = 0
-    
+
     return 1 - max(values)
 
 def entropy(attribute, samples, threshold):
