@@ -11,13 +11,22 @@ def load_artificial_data(path):
     '''
     data = pd.read_csv(path)
     data = data.to_numpy()
-    np.random.shuffle(data)
     X = data[1:, 1:-1] # i believe this is correct
     Y = data[1:, -1]
-    # TODO build Sample objects with label and a vector for X
-    # Example:
     samples = list()
-    for i in range(len(Y)):
+    attr_dict = dict()
+    for i in range(len(X)):
         sample = Sample(label=Y[i], X=X[i])
         samples.append(sample)
-    return samples
+
+        for j in range(len(X[i])):
+            if j not in attr_dict:
+                attr_dict[j] = set()
+            attr_dict[j].add(X[i][j])
+    
+    attributes = list()
+    for key in attr_dict:
+        attributes.append(Attribute(name=key, values=attr_dict[key]))
+        
+    np.random.shuffle(samples)
+    return samples, attributes
