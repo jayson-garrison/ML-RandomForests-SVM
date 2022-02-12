@@ -150,6 +150,16 @@ def create_bag(samples, n):
     return bag
 
 def select_attributes(attributes, n):
+<<<<<<< HEAD
     selected_attributes = np.random.choice(attributes, n, replace=False)
     return selected_attributes
+=======
+<<<<<<< HEAD
+    sample_attributes = np.random.choice(attributes, n, replace=False)
+    return sample_attributes
+=======
+    selected_attributes = np.random.choice(attributes, n, replace=False)
+    return selected_attributes
+>>>>>>> 39cab30be021cf6602a176d9552a5c0e5762e910
+>>>>>>> main
 
