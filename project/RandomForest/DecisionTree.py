@@ -54,7 +54,7 @@ class DecisionTree:
                     node = child
                     break
             
-        return node.getClass()==sample.getLabel()
+        return node.getClass()
 
 
     def pretty_print_tree(self, node=None, prefix="", last=True):
