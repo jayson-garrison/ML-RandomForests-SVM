@@ -11,7 +11,7 @@ def load_email_data():
     Y = data[1:, -1]
     samples = list()
     attr_dict = dict()
-    for i in range(len(X)):
+    for i in range(int(len(X)/10)):
         sample = Sample(label=Y[i], X=X[i])
         samples.append(sample)
 
