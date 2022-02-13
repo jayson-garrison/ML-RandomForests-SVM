@@ -7,10 +7,17 @@ from scipy import stats
 import numpy as np
 
 class RandomForestModel(Model):
-    def __init__(self, H=entropy, maxTreeDepth=1):
+    def __init__(self, H=entropy, k=20, maxTreeDepth=1):
+        """
+        Args:
+            H ([type], optional): The information gain function. Defaults to entropy.
+            k (int, optional): The number of trees in the forest. Defaults to 20.
+            maxTreeDepth (int, optional): The maximum number of levels in each tree. Defaults to 1.
+        """
         self.H = H
-        self.forest = list()
+        self.k = k
         self.maxTreeDepth = maxTreeDepth
+        self.forest = list()
         super().__init__()
 
 
@@ -20,22 +27,31 @@ class RandomForestModel(Model):
 
 
     def call(self, sample):
-        """"
-            sample: a single Sample object with a label and (vector) X
-        """ 
-        decisions = list()
+        """Classify a point with the model
+        Args:
+            sample Sample: a single datapoint to be classified
+
+        Returns:
+            List of strings: each idx i is the mode classification of the first i trees in the forest
+        """
+        predictions = list()
         for tree in self.forest:
-            decisions.append(tree.test_a_point(sample))
-        return stats.mode(decisions, axis=None)[0][0]
+            predictions.append(tree.test_a_point(sample))
+        decisions = list()
+        for idx in range(len(predictions)):
+            decisions.append(
+                    stats.mode(predictions[:idx+1], axis=None)[0][0]
+                )
+        return decisions
 
 
-    def fit(self, training_data, attributes, k):
+    def fit(self, training_data, attributes):
         """
             training_data: an array of Sample objects with a label and (vector) X
             k: the the number of trees in the forest
         """
-        for i in range(k):
-            print(f'Constructing tree {i}')
+        self.clearForest()
+        for i in range(self.k):
             # sample data for building a tree (bagging)
             bag = create_bag(training_data, len(training_data))
             sample_attributes = select_attributes(attributes, int(math.sqrt(len(attributes))))
@@ -65,7 +81,7 @@ class RandomForestModel(Model):
         elif current_depth == self.maxTreeDepth:
             return self.plurality_value(examples)
         else:
-            A, threshold = argmax(self.H, attributes, examples, self.classes)
+            A, threshold = argmax(self.H, attributes, examples)
             tree = DecisionTree(attribute=A)
 
             # Sort data based on above and below threshold
@@ -111,6 +127,12 @@ class RandomForestModel(Model):
             if label != sample.getLabel():
                 return False
         return True
+
+    def getK(self):
+        return self.k
+    
+    def clearForest(self):
+        self.forest = list()
 
     
     
