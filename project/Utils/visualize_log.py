@@ -32,8 +32,9 @@ def visualize_log(log_file):
     plt.title('DEFAULT')
     plt.xlabel('Number of Trees')
     plt.ylabel('Accuracy')
+    plt.savefig('NAME.png')
     plt.legend()
     plt.show()
-    plt.savefig('NAME.png')
+    
     
      
