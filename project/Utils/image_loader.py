@@ -4,7 +4,8 @@ from Utils.Sample import Sample
 from Utils.Attribute import Attribute
 
 def load_image_data():
-    data = pd.read_csv('./project/Datasets/mnist/train.csv') 
+    # Restructure the data so that |X| is 255 (one feature for each intensity) and x_i is the count for the ith intensity in the image X_i
+    data = pd.read_csv('./project/Datasets/mnist/train.csv')
     data = data.to_numpy()
     np.random.shuffle(data)
     X = data[1:, 1:]
@@ -12,13 +13,16 @@ def load_image_data():
     samples = list()
     attr_dict = dict()
     for i in range(len(X)):
-        sample = Sample(label=Y[i], X=X[i])
+        x = [0 for _ in range(256)]
+        for intensity in X[i]:
+            x[intensity] += 1
+        sample = Sample(label=Y[i], X=x)
         samples.append(sample)
 
-        for j in range(len(X[i])):
+        for j in range(len(x)):
             if j not in attr_dict:
                 attr_dict[j] = set()
-            attr_dict[j].add(X[i][j])
+            attr_dict[j].add(x[j])
     
     attributes = list()
     for key in attr_dict:

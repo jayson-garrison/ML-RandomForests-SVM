@@ -5,6 +5,7 @@ from RandomForest.Classification import *
 from RandomForest.DecisionTree import *
 from scipy import stats
 import numpy as np
+import time
 
 class RandomForestModel(Model):
     def __init__(self, H=entropy, k=20, maxTreeDepth=1):
@@ -52,6 +53,8 @@ class RandomForestModel(Model):
         """
         self.clearForest()
         for i in range(self.k):
+            start = time.time()
+            print(f'Planting tree {i}', end=' ... ')
             # sample data for building a tree (bagging)
             bag = create_bag(training_data, len(training_data))
             sample_attributes = select_attributes(attributes, int(math.sqrt(len(attributes))))
@@ -60,6 +63,7 @@ class RandomForestModel(Model):
             # Add tree to forest
             self.forest.append(stump)
             # Repeat k times
+            print(f'Elapsed Time: {time.time()-start}')
 
             # NOTE: this could be parallelized, but idc
 
