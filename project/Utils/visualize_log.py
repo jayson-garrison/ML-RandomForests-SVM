@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-def visualize_log(log_file):
+def visualize_log(log_file, graph_name):
     """
     plots the log file's train and testing performance
     @param log_file, the name of the file to be visualized
@@ -29,10 +29,10 @@ def visualize_log(log_file):
 
     plt.plot(Y,x_train, label = 'Train')
     plt.plot(Y,x_test, label = 'Test')
-    plt.title('DEFAULT')
+    plt.title(graph_name)
     plt.xlabel('Number of Trees')
     plt.ylabel('Accuracy')
-    plt.savefig('NAME.png')
+    plt.savefig(graph_name+'.png')
     plt.legend()
     plt.show()
     

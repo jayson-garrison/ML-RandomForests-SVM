@@ -19,7 +19,6 @@ if __name__ == "__main__":
         'dataset': 'blob' # data sets, 0: blob, 1: spiral, 2: mail, 3: image
     }
     filename = 'project/Logs/ds-'+str(hyper_parameters['dataset'])+'_rf_nt-'+str(hyper_parameters['nt'])+'_mdt-'+str(hyper_parameters['mdt'])+'_h-'+str(hyper_parameters['hname'])+'.txt'
-    
     if run_analysis:
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         with open(filename, 'w') as log:
