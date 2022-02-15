@@ -9,7 +9,7 @@ from Utils.visualize_log import *
 
 
 if __name__ == "__main__":
-    run_analysis = True
+    run_analysis = False
     params_list_0 = [
         (1, 100, entropy, 'entropy', 'spiral'),
         (1, 100, gini, 'gini', 'spiral'),
@@ -51,7 +51,7 @@ if __name__ == "__main__":
         (3, 100, misclassification, 'misclassification', 'blob'),
     ]
     
-    for params in params_list_0: # 0 or 1
+    for params in params_list_1: # 0 or 1
         hyper_parameters = {
             'mdt': params[0], # Max depth of the tree
             'nt': 100, # Number of trees in the forest
@@ -85,4 +85,7 @@ if __name__ == "__main__":
                     log.write(line)
                 log.close()
 
+    log_dir = 'project/Logs/'
+    for file in os.listdir(log_dir):
+        print(file)
     # visualize_log(filename)
