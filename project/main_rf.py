@@ -10,6 +10,8 @@ from Utils.visualize_log import *
 
 if __name__ == "__main__":
     run_analysis = False
+    generate_visuals = False
+    
     params_list_0 = [
         (1, 100, entropy, 'entropy', 'spiral'),
         (1, 100, gini, 'gini', 'spiral'),
@@ -30,6 +32,7 @@ if __name__ == "__main__":
         (3, 100, gini, 'gini', 'image'),
         (3, 100, misclassification, 'misclassification', 'image'),
     ]
+    
     params_list_1 = [
         (1, 100, entropy, 'entropy', 'mail'),
         (1, 100, gini, 'gini', 'mail'),
@@ -85,7 +88,8 @@ if __name__ == "__main__":
                     log.write(line)
                 log.close()
 
-    log_dir = 'project/Logs/'
-    for file in os.listdir(log_dir):
-        print(file)
-    # visualize_log(filename)
+    if generate_visuals:
+        log_dir = 'project/Logs/'
+        for file in os.listdir(log_dir):
+            visualize_log(file, file)
+        # visualize_log(filename)
