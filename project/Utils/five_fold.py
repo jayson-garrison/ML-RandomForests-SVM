@@ -5,6 +5,7 @@ Course: CS-5333 (Machine Learning)
 GitHub: https://github.com/jayson-garrison/ML-Naive-Bayes
 """
 import numpy as np
+import time 
 
 # partition a data set into a list of 5 tuples for training and testing
 # five fold data partition
@@ -40,10 +41,13 @@ def make_output_strings(dataset, model, attributes):
     test_columns = ['' for _ in range(len(output))]
     validation_count = 0
     for partition in fold:
+        start = time.time()
         validation_count += 1
-        print(f'Fitting model [{validation_count}/5]')
+        print(f'Fitting model [{validation_count}/5]', end=' ... ')
         model.fit(partition[0], attributes)
-        print(f'Validating model [{validation_count}/5]')
+        print(f'Elapsed Time: {time.time()-start}')
+        start = time.time()
+        print(f'Validating model [{validation_count}/5]', end=' ... ')
         # First compute the training accuracies
         train_accuracies = [0 for _ in range(len(output))]
         for sample in partition[0]:
@@ -72,6 +76,7 @@ def make_output_strings(dataset, model, attributes):
         for idx in range(len(output)):
             train_columns[idx] += str(train_accuracies[idx])+','
             test_columns[idx] += str(test_accuracies[idx])+','
+        print(f'Elapsed Time: {time.time()-start}')
 
     # Aggregate the column information
     for idx in range(len(output)):
