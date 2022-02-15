@@ -9,8 +9,10 @@ from Utils.visualize_log import *
 
 
 if __name__ == "__main__":
-    run_analysis = True
-    params_list = [
+    run_analysis = False
+    generate_visuals = False
+    
+    params_list_0 = [
         (1, 100, entropy, 'entropy', 'spiral'),
         (1, 100, gini, 'gini', 'spiral'),
         (1, 100, misclassification, 'misclassification', 'spiral'),
@@ -31,7 +33,28 @@ if __name__ == "__main__":
         (3, 100, misclassification, 'misclassification', 'image'),
     ]
     
-    for params in params_list:
+    params_list_1 = [
+        (1, 100, entropy, 'entropy', 'mail'),
+        (1, 100, gini, 'gini', 'mail'),
+        (1, 100, misclassification, 'misclassification', 'mail'),
+        (2, 100, entropy, 'entropy', 'mail'),
+        (2, 100, gini, 'gini', 'mail'),
+        (2, 100, misclassification, 'misclassification', 'mail'),
+        (3, 100, entropy, 'entropy', 'mail'),
+        (3, 100, gini, 'gini', 'mail'),
+        (3, 100, misclassification, 'misclassification', 'mail'),
+        (1, 100, entropy, 'entropy', 'blob'),
+        (1, 100, gini, 'gini', 'blob'),
+        (1, 100, misclassification, 'misclassification', 'blob'),
+        (2, 100, entropy, 'entropy', 'blob'),
+        (2, 100, gini, 'gini', 'blob'),
+        (2, 100, misclassification, 'misclassification', 'blob'),
+        (3, 100, entropy, 'entropy', 'blob'),
+        (3, 100, gini, 'gini', 'blob'),
+        (3, 100, misclassification, 'misclassification', 'blob'),
+    ]
+    
+    for params in params_list_1: # 0 or 1
         hyper_parameters = {
             'mdt': params[0], # Max depth of the tree
             'nt': 100, # Number of trees in the forest
@@ -65,4 +88,8 @@ if __name__ == "__main__":
                     log.write(line)
                 log.close()
 
-    # visualize_log(filename)
+    if generate_visuals:
+        log_dir = 'project/Logs/'
+        for file in os.listdir(log_dir):
+            visualize_log(file, file)
+        # visualize_log(filename)
