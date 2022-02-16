@@ -62,7 +62,7 @@ def misclassification(attribute, samples, threshold):
         values.append(count / len(below_samples))
         count = 0
 
-    return 1 - max(values)
+    return 1- (1 - max(values))
 
 def entropy(attribute, samples, threshold):
     # TODO check these computations
