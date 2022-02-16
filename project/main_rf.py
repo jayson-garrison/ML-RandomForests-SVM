@@ -97,7 +97,7 @@ if __name__ == "__main__":
         
     ]
     
-    for params in params_blobs:
+    for params in params_spiral:
         hyper_parameters = {
             'mdt': params[0], # Max depth of the tree
             'h': params[1], # The evaluation function

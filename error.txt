@@ -1,0 +1,16 @@
+Creating file project/Logs/RF/DataSet_spiral/_NumTrees-150_MaxDepth-2_InfoGain-entropy_M-2.txt
+Fitting model [1/5] ... Traceback (most recent call last):
+  File "/home/jayso/CS-5333/ML-RandomForests-SVM/project/main_rf.py", line 135, in <module>
+    output = make_output_strings(dataset, rf, attributes)
+  File "/home/jayso/CS-5333/ML-RandomForests-SVM/project/Utils/five_fold.py", line 47, in make_output_strings
+    model.fit(partition[0], attributes)
+  File "/home/jayso/CS-5333/ML-RandomForests-SVM/project/RandomForest/RandomForestModel.py", line 61, in fit
+    stump = self.learn_decision_tree(bag, attributes, list())
+  File "/home/jayso/CS-5333/ML-RandomForests-SVM/project/RandomForest/RandomForestModel.py", line 111, in learn_decision_tree
+    subtreeb = self.learn_decision_tree(below_samples, next_attributes, examples, current_depth=current_depth+1)
+  File "/home/jayso/CS-5333/ML-RandomForests-SVM/project/RandomForest/RandomForestModel.py", line 86, in learn_decision_tree
+    sample_attributes = select_attributes(attributes, self.M)
+  File "/home/jayso/CS-5333/ML-RandomForests-SVM/project/Utils/helper_functions.py", line 153, in select_attributes
+    selected_attributes = np.random.choice(attributes, n, replace=False)
+  File "mtrand.pyx", line 965, in numpy.random.mtrand.RandomState.choice
+ValueError: Cannot take a larger sample than population when 'replace=False'
