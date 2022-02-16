@@ -8,16 +8,18 @@ import numpy as np
 import time
 
 class RandomForestModel(Model):
-    def __init__(self, H=entropy, k=20, maxTreeDepth=1):
+    def __init__(self, H=entropy, k=20, maxTreeDepth=1, M=2):
         """
         Args:
             H ([type], optional): The information gain function. Defaults to entropy.
             k (int, optional): The number of trees in the forest. Defaults to 20.
             maxTreeDepth (int, optional): The maximum number of levels in each tree. Defaults to 1.
+            M (int, optional): The number of attributes considered at each node when building the trees
         """
         self.H = H
         self.k = k
         self.maxTreeDepth = maxTreeDepth
+        self.M = M
         self.forest = list()
         super().__init__()
 
@@ -53,17 +55,13 @@ class RandomForestModel(Model):
         """
         self.clearForest()
         for i in range(self.k):
-            start = time.time()
-            print(f'Planting tree {i}', end=' ... ')
             # sample data for building a tree (bagging)
             bag = create_bag(training_data, len(training_data))
-            sample_attributes = select_attributes(attributes, int(math.sqrt(len(attributes))))
             # Call learn_decision_tree()
-            stump = self.learn_decision_tree(bag, sample_attributes, list())
+            stump = self.learn_decision_tree(bag, attributes, list())
             # Add tree to forest
             self.forest.append(stump)
             # Repeat k times
-            print(f'Elapsed Time: {time.time()-start}')
 
             # NOTE: this could be parallelized, but idc
 
@@ -85,7 +83,8 @@ class RandomForestModel(Model):
         elif current_depth == self.maxTreeDepth:
             return self.plurality_value(examples)
         else:
-            A, threshold = argmax(self.H, attributes, examples)
+            sample_attributes = select_attributes(attributes, self.M)
+            A, threshold = argmax(self.H, sample_attributes, examples)
             tree = DecisionTree(attribute=A)
 
             # Sort data based on above and below threshold

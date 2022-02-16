@@ -43,9 +43,9 @@ def make_output_strings(dataset, model, attributes):
     for partition in fold:
         start = time.time()
         validation_count += 1
-        print(f'Fitting model [{validation_count}/5]', end=' ... \n')
+        print(f'Fitting model [{validation_count}/5]', end=' ... ')
         model.fit(partition[0], attributes)
-        print(f'Model.fit() Elapsed Time: {time.time()-start}')
+        print(f'Elapsed Time: {time.time()-start}')
         start = time.time()
         print(f'Validating model [{validation_count}/5]', end=' ... ')
         # First compute the training accuracies
