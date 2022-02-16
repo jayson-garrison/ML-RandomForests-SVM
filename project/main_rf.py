@@ -98,6 +98,7 @@ if __name__ == "__main__":
     ]
     
     for params in params_blobs:
+        params = (1, misclassification, 'misclassification', 'blob', 2)
         hyper_parameters = {
             'mdt': params[0], # Max depth of the tree
             'h': params[1], # The evaluation function
