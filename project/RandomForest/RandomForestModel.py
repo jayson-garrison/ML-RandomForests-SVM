@@ -96,11 +96,9 @@ class RandomForestModel(Model):
                 else:
                     below_samples.append(sample)
             
-            # Make recursive call for each subset (without considering the attribute already split on)
-            next_attributes = [a for a in attributes if a.getName() != A.getName()]
 
             # First the above values
-            subtreea = self.learn_decision_tree(above_samples, next_attributes, examples, current_depth=current_depth+1)
+            subtreea = self.learn_decision_tree(above_samples, attributes, examples, current_depth=current_depth+1)
             if not isinstance(subtreea, DecisionTree):
                 subtreea = Classification(c=subtreea, label="ABOVE", threshold=threshold)
             subtreea.setLabel(f"ABOVE")
@@ -108,7 +106,7 @@ class RandomForestModel(Model):
             tree.addChild(subtreea)
 
             # Now the below values
-            subtreeb = self.learn_decision_tree(below_samples, next_attributes, examples, current_depth=current_depth+1)
+            subtreeb = self.learn_decision_tree(below_samples, attributes, examples, current_depth=current_depth+1)
             if not isinstance(subtreeb, DecisionTree):
                 subtreeb = Classification(c=subtreeb, label="BELOW", threshold=threshold)
             subtreeb.setLabel(f"BELOW")
