@@ -9,8 +9,8 @@ from Utils.visualize_log import *
 
 
 if __name__ == "__main__":    
-    run_analysis = True
-    generate_visuals = False
+    run_analysis = False
+    generate_visuals = True
 
     # Blobs only has two attributes, M=2 always
     params_blobs = [
@@ -97,11 +97,7 @@ if __name__ == "__main__":
         
     ]
     
-<<<<<<< HEAD
     for params in params_image:
-=======
-    for params in params_spiral:
->>>>>>> main
         hyper_parameters = {
             'mdt': params[0], # Max depth of the tree
             'h': params[1], # The evaluation function
@@ -142,7 +138,7 @@ if __name__ == "__main__":
                 log.close()
 
     if generate_visuals:
-        log_dir = 'project/Logs/'
+        log_dir = 'project/Logs/RF/DataSet_spiral/'
         for file in os.listdir(log_dir):
-            visualize_log(file, file)
+            visualize_log(file, 'DataSet_spiral/',file)
         # visualize_log(filename)

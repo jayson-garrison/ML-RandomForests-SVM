@@ -3,15 +3,15 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-def visualize_log(log_file, graph_name):
+def visualize_log(log_file, data_name, graph_name):
     """
     plots the log file's train and testing performance
     @param log_file, the name of the file to be visualized
     """
-    data = pd.read_csv('project/Logs/'+log_file)
+    data = pd.read_csv('project/Logs/RF/'+data_name +log_file)
     data = data.to_numpy()
     X1 = data[:, 1:6]
-    Y = np.array(list(range(100)))
+    Y = np.array(list(range(150)))
     X2 = data[:, 6:-1]
 
     x_train = list()
@@ -32,9 +32,9 @@ def visualize_log(log_file, graph_name):
     plt.title(graph_name)
     plt.xlabel('Number of Trees')
     plt.ylabel('Accuracy')
-    plt.savefig('project/Visuals/'+graph_name+'.png')
     plt.legend()
-    plt.show()
+    plt.savefig('project/Visuals/RF/'+data_name+graph_name+'.png')
+    #plt.show()
     plt.close()
     
     
