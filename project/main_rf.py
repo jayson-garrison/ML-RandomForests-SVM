@@ -1,16 +1,19 @@
 from fileinput import filename
 import os
+from tkinter import E
 from RandomForest.RandomForestModel import *
 from Utils.email_loader import load_email_data
 from Utils.image_loader import load_image_data
 from Utils.artificial_data_loader import *
 from Utils.five_fold import *
 from Utils.visualize_log import *
+import time
 
 
 if __name__ == "__main__":    
-    run_analysis = False
-    generate_visuals = True
+    
+    run_analysis = True
+    generate_visuals = False
 
     # Blobs only has two attributes, M=2 always
     params_blobs = [
@@ -97,7 +100,8 @@ if __name__ == "__main__":
         
     ]
     
-    for params in params_image:
+    for params in params_blobs:
+        params = (3, entropy, 'entropy', 'mail', 2)
         hyper_parameters = {
             'mdt': params[0], # Max depth of the tree
             'h': params[1], # The evaluation function
@@ -138,7 +142,7 @@ if __name__ == "__main__":
                 log.close()
 
     if generate_visuals:
-        log_dir = 'project/Logs/RF/DataSet_spiral/'
+        log_dir = 'project/Logs/'
         for file in os.listdir(log_dir):
-            visualize_log(file, 'DataSet_spiral/',file)
+            visualize_log(file, file)
         # visualize_log(filename)
