@@ -1,14 +1,17 @@
 from fileinput import filename
 import os
+from tkinter import E
 from RandomForest.RandomForestModel import *
 from Utils.email_loader import load_email_data
 from Utils.image_loader import load_image_data
 from Utils.artificial_data_loader import *
 from Utils.five_fold import *
 from Utils.visualize_log import *
+import time
 
 
 if __name__ == "__main__":    
+    
     run_analysis = True
     generate_visuals = False
 
@@ -98,7 +101,7 @@ if __name__ == "__main__":
     ]
     
     for params in params_blobs:
-        params = (1, misclassification, 'misclassification', 'blob', 2)
+        params = (3, entropy, 'entropy', 'mail', 2)
         hyper_parameters = {
             'mdt': params[0], # Max depth of the tree
             'h': params[1], # The evaluation function

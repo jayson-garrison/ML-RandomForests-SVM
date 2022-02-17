@@ -71,7 +71,9 @@ def make_output_strings(dataset, model, attributes):
         for idx in range(len(test_accuracies)):
             test_accuracies[idx] = test_accuracies[idx]/len(partition[1])
 
-        
+        print(f'train_acc: {train_accuracies[-1]}, test_acc: {test_accuracies[-1]}')
+        model.forest[0].pretty_print_tree()
+        exit()
         # Finally, build the output
         for idx in range(len(output)):
             train_columns[idx] += str(train_accuracies[idx])+','
