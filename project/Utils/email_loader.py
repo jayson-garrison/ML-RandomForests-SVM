@@ -2,12 +2,14 @@ import pandas as pd
 import numpy as np
 from Utils.Sample import Sample
 from Utils.Attribute import Attribute
+from Utils.PCA import *
 
 
 def load_email_data():
     data = pd.read_csv('./project/Datasets/spam_ham/emails.csv')
     data = data.to_numpy()
     X = data[1:, 1:-1]
+    X = pca(X, 4)
     Y = data[1:, -1]
     samples = list()
     attr_dict = dict()

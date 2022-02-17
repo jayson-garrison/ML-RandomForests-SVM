@@ -1,16 +1,19 @@
 from fileinput import filename
 import os
+from tkinter import E
 from RandomForest.RandomForestModel import *
 from Utils.email_loader import load_email_data
 from Utils.image_loader import load_image_data
 from Utils.artificial_data_loader import *
 from Utils.five_fold import *
 from Utils.visualize_log import *
+import time
 
 
 if __name__ == "__main__":    
-    run_analysis = False
-    generate_visuals = True
+    
+    run_analysis = True
+    generate_visuals = False
 
     # Blobs only has two attributes, M=2 always
     params_blobs = [
@@ -98,6 +101,10 @@ if __name__ == "__main__":
     ]
     
     for params in params_blobs:
+<<<<<<< HEAD
+=======
+        params = (3, entropy, 'entropy', 'mail', 2)
+>>>>>>> d8da1be98c569ac0bab8860b9584a99cc9d75292
         hyper_parameters = {
             'mdt': params[0], # Max depth of the tree
             'h': params[1], # The evaluation function
@@ -138,6 +145,7 @@ if __name__ == "__main__":
                 log.close()
 
     if generate_visuals:
+<<<<<<< HEAD
         log_list1 = [
             '_NumTrees-150_MaxDepth-3_InfoGain-entropy_M-2.txt',
             '_NumTrees-150_MaxDepth-3_InfoGain-gini_M-2.txt',
@@ -148,4 +156,9 @@ if __name__ == "__main__":
         log_dir = 'project/Logs/RF/DataSet_spiral/'
         for file in os.listdir(log_dir):
             visualize_log(list(file), 'DataSet_spiral/',file)
+=======
+        log_dir = 'project/Logs/'
+        for file in os.listdir(log_dir):
+            visualize_log(file, file)
+>>>>>>> d8da1be98c569ac0bab8860b9584a99cc9d75292
         # visualize_log(filename)
