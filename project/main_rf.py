@@ -100,11 +100,7 @@ if __name__ == "__main__":
         
     ]
     
-    for params in params_blobs:
-<<<<<<< HEAD
-=======
-        params = (3, entropy, 'entropy', 'mail', 2)
->>>>>>> d8da1be98c569ac0bab8860b9584a99cc9d75292
+    for params in params_image:
         hyper_parameters = {
             'mdt': params[0], # Max depth of the tree
             'h': params[1], # The evaluation function
@@ -145,20 +141,14 @@ if __name__ == "__main__":
                 log.close()
 
     if generate_visuals:
-<<<<<<< HEAD
         log_list1 = [
             '_NumTrees-150_MaxDepth-3_InfoGain-entropy_M-2.txt',
             '_NumTrees-150_MaxDepth-3_InfoGain-gini_M-2.txt',
             '_NumTrees-150_MaxDepth-3_InfoGain-misclassification_M-2.txt'
         ]
         visualize_log(log_list1, 'DataSet_spiral/', 'Performance on Depth 3 on Spirals')
-        exit()
+        #exit()
         log_dir = 'project/Logs/RF/DataSet_spiral/'
         for file in os.listdir(log_dir):
             visualize_log(list(file), 'DataSet_spiral/',file)
-=======
-        log_dir = 'project/Logs/'
-        for file in os.listdir(log_dir):
-            visualize_log(file, file)
->>>>>>> d8da1be98c569ac0bab8860b9584a99cc9d75292
         # visualize_log(filename)
