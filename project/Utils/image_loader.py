@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from Utils.Sample import Sample
 from Utils.Attribute import Attribute
+from Utils.helper_functions import *
 
 def load_image_data():
     # Restructure the data so that |X| is 255 (one feature for each intensity) and x_i is the count for the ith intensity in the image X_i
@@ -26,7 +27,11 @@ def load_image_data():
     
     attributes = list()
     for key in attr_dict:
-        attributes.append(Attribute(name=key, values=attr_dict[key]))
-        
+        attr_values = list(attr_dict[key])
+        attributes.append(Attribute(name=key, values=select_attributes(attr_values, 
+                                                                        15 # The number of attibute values to consider as possible split points. 15 ~ log2(42000)
+                                                                        )
+                                    )
+                        )
     np.random.shuffle(samples)
     return samples, attributes

@@ -3,6 +3,7 @@ import numpy as np
 from Utils.Sample import Sample
 from Utils.Attribute import Attribute
 from Utils.PCA import *
+from Utils.helper_functions import select_attributes
 
 
 def load_email_data():
@@ -24,7 +25,12 @@ def load_email_data():
     
     attributes = list()
     for key in attr_dict:
-        attributes.append(Attribute(name=key, values=attr_dict[key]))
-        
+        attr_values = list(attr_dict[key])
+        attributes.append(Attribute(name=key, values=select_attributes(attr_values, 
+                                                                        12 # The number of attibute values to consider as possible split points.
+                                                                        )
+                                    )
+                        )
+    # print(f'DIMS POST PCA: {len(samples)} x {len(samples[0].getX())}')
     np.random.shuffle(samples)
     return samples, attributes
