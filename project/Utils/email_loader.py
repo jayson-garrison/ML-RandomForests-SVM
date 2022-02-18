@@ -6,11 +6,15 @@ from Utils.PCA import *
 
 
 def load_email_data():
-    data = pd.read_csv('./project/Datasets/spam_ham/emails.csv')
+    data = pd.read_csv('./project/Datasets/spam_ham/pca_emails.csv')
     data = data.to_numpy()
     X = data[1:, 1:-1]
-    X = pca(X, 4)
+    #X = pca(X, 4)
     Y = data[1:, -1]
+
+    #pca_emails = pd.DataFrame(np.column_stack((Y,X))) 
+    #pca_emails.to_csv('pca_emails.csv')
+    
     samples = list()
     attr_dict = dict()
     for i in range(int(len(X))):
