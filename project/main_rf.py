@@ -11,7 +11,11 @@ import time
 
 
 if __name__ == "__main__":    
-    
+    # y = np.array((0, 1, 2))
+    # x = np.matrix([[0, 0], [1, 1], [2, 2]])
+    # print(np.column_stack((y, x)))
+    # exit()
+
     run_analysis = True
     generate_visuals = False
 
@@ -38,70 +42,69 @@ if __name__ == "__main__":
         (3, entropy, 'entropy', 'spiral', 2),
         (3, gini, 'gini', 'spiral', 2),
         (3, misclassification, 'misclassification', 'spiral', 2)]
-    # Image has 3000 attributes, let M be in {2, 6, 11~log2(3000)}
+    # Image has 3000 attributes, 4 after pca. Let M be in {2, 3, 4}
     params_image = [
         (1, entropy, 'entropy', 'image', 2),
-        (1, entropy, 'entropy', 'image', 6),
-        (1, entropy, 'entropy', 'image', 11),
+        (1, entropy, 'entropy', 'image', 3),
+        (1, entropy, 'entropy', 'image', 4),
         (1, gini, 'gini', 'image', 2),
-        (1, gini, 'gini', 'image', 6),
-        (1, gini, 'gini', 'image', 11),
+        (1, gini, 'gini', 'image', 3),
+        (1, gini, 'gini', 'image', 4),
         (1, misclassification, 'misclassification', 'image', 2),
-        (1, misclassification, 'misclassification', 'image', 6),
-        (1, misclassification, 'misclassification', 'image', 11),
+        (1, misclassification, 'misclassification', 'image', 3),
+        (1, misclassification, 'misclassification', 'image', 4),
         (2, entropy, 'entropy', 'image', 2),
-        (2, entropy, 'entropy', 'image', 6),
-        (2, entropy, 'entropy', 'image', 11),
+        (2, entropy, 'entropy', 'image', 3),
+        (2, entropy, 'entropy', 'image', 4),
         (2, gini, 'gini', 'image', 2),
-        (2, gini, 'gini', 'image', 6),
-        (2, gini, 'gini', 'image', 11),
+        (2, gini, 'gini', 'image', 3),
+        (2, gini, 'gini', 'image', 4),
         (2, misclassification, 'misclassification', 'image', 2),
-        (2, misclassification, 'misclassification', 'image', 6),
-        (2, misclassification, 'misclassification', 'image', 11),
+        (2, misclassification, 'misclassification', 'image', 3),
+        (2, misclassification, 'misclassification', 'image', 4),
         (3, entropy, 'entropy', 'image', 2),
-        (3, entropy, 'entropy', 'image', 6),
-        (3, entropy, 'entropy', 'image', 11),
+        (3, entropy, 'entropy', 'image', 3),
+        (3, entropy, 'entropy', 'image', 4),
         (3, gini, 'gini', 'image', 2),
-        (3, gini, 'gini', 'image', 6),
-        (3, gini, 'gini', 'image', 11),
+        (3, gini, 'gini', 'image', 3),
+        (3, gini, 'gini', 'image', 4),
         (3, misclassification, 'misclassification', 'image', 2),
-        (3, misclassification, 'misclassification', 'image', 6),
-        (3, misclassification, 'misclassification', 'image', 11),
+        (3, misclassification, 'misclassification', 'image', 3),
+        (3, misclassification, 'misclassification', 'image', 4),
     ]
-    # Mail has 256 attributes, let M be in {2, 4, 8}
+    # Mail has 256 attributes, 4 after pca. Let M be in {2, 3, 4}
     params_mail = [
         (1, entropy, 'entropy', 'mail', 2),
         (1, entropy, 'entropy', 'mail', 4),
-        (1, entropy, 'entropy', 'mail', 8),
+        (1, entropy, 'entropy', 'mail', 3),
         (1, gini, 'gini', 'mail', 2),
         (1, gini, 'gini', 'mail', 4),
-        (1, gini, 'gini', 'mail', 8),
+        (1, gini, 'gini', 'mail', 3),
         (1, misclassification, 'misclassification', 'mail', 2),
         (1, misclassification, 'misclassification', 'mail', 4),
-        (1, misclassification, 'misclassification', 'mail', 8),
+        (1, misclassification, 'misclassification', 'mail', 3),
         (2, entropy, 'entropy', 'mail', 2),
         (2, entropy, 'entropy', 'mail', 4),
-        (2, entropy, 'entropy', 'mail', 8),
+        (2, entropy, 'entropy', 'mail', 3),
         (2, gini, 'gini', 'mail', 2),
         (2, gini, 'gini', 'mail', 4),
-        (2, gini, 'gini', 'mail', 8),
+        (2, gini, 'gini', 'mail', 3),
         (2, misclassification, 'misclassification', 'mail', 2),
         (2, misclassification, 'misclassification', 'mail', 4),
-        (2, misclassification, 'misclassification', 'mail', 8),
+        (2, misclassification, 'misclassification', 'mail', 3),
         (3, entropy, 'entropy', 'mail', 2),
         (3, entropy, 'entropy', 'mail', 4),
-        (3, entropy, 'entropy', 'mail', 8),
+        (3, entropy, 'entropy', 'mail', 3),
         (3, gini, 'gini', 'mail', 2),
         (3, gini, 'gini', 'mail', 4),
-        (3, gini, 'gini', 'mail', 8),
+        (3, gini, 'gini', 'mail', 3),
         (3, misclassification, 'misclassification', 'mail', 2),
         (3, misclassification, 'misclassification', 'mail', 4),
-        (3, misclassification, 'misclassification', 'mail', 8),
+        (3, misclassification, 'misclassification', 'mail', 3),
         
     ]
     
-    for params in params_mail:
-        params = (3, entropy, 'entropy', 'mail', 2)
+    for params in params_image:
         hyper_parameters = {
             'mdt': params[0], # Max depth of the tree
             'h': params[1], # The evaluation function
@@ -148,7 +151,7 @@ if __name__ == "__main__":
             '_NumTrees-150_MaxDepth-3_InfoGain-misclassification_M-2.txt'
         ]
         visualize_log(log_list1, 'DataSet_spiral/', 'Performance on Depth 3 on Spirals')
-        exit()
+        #exit()
         log_dir = 'project/Logs/RF/DataSet_spiral/'
         for file in os.listdir(log_dir):
             visualize_log(list(file), 'DataSet_spiral/',file)
