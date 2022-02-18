@@ -21,14 +21,14 @@ if __name__ == "__main__":
 
     # Blobs only has two attributes, M=2 always
     params_blobs = [
-        (1, entropy, 'entropy', 'blob', 2),
-        (1, gini, 'gini', 'blob', 2),
+        #(1, entropy, 'entropy', 'blob', 2),
+        #(1, gini, 'gini', 'blob', 2),
         (1, misclassification, 'misclassification', 'blob', 2),
-        (2, entropy, 'entropy', 'blob', 2),
-        (2, gini, 'gini', 'blob', 2),
+        #(2, entropy, 'entropy', 'blob', 2),
+        #(2, gini, 'gini', 'blob', 2),
         (2, misclassification, 'misclassification', 'blob', 2),
-        (3, entropy, 'entropy', 'blob', 2),
-        (3, gini, 'gini', 'blob', 2),
+        #(3, entropy, 'entropy', 'blob', 2),
+        #(3, gini, 'gini', 'blob', 2),
         (3, misclassification, 'misclassification', 'blob', 2),
     ]
     # Spiral only has two attributes, M=2 always
@@ -104,8 +104,7 @@ if __name__ == "__main__":
         
     ]
     
-    for params in params_blobs:
-        params = (3, entropy, 'entropy', 'mail', 2)
+    for params in params_image:
         hyper_parameters = {
             'mdt': params[0], # Max depth of the tree
             'h': params[1], # The evaluation function
@@ -146,7 +145,14 @@ if __name__ == "__main__":
                 log.close()
 
     if generate_visuals:
-        log_dir = 'project/Logs/'
+        log_list1 = [
+            '_NumTrees-150_MaxDepth-3_InfoGain-entropy_M-2.txt',
+            '_NumTrees-150_MaxDepth-3_InfoGain-gini_M-2.txt',
+            '_NumTrees-150_MaxDepth-3_InfoGain-misclassification_M-2.txt'
+        ]
+        visualize_log(log_list1, 'DataSet_spiral/', 'Performance on Depth 3 on Spirals')
+        #exit()
+        log_dir = 'project/Logs/RF/DataSet_spiral/'
         for file in os.listdir(log_dir):
-            visualize_log(file, file)
+            visualize_log(list(file), 'DataSet_spiral/',file)
         # visualize_log(filename)
