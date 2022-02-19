@@ -14,23 +14,84 @@ class SVM(Model):
         self.max_passes = max_passes
         self.k = k # The kernel function, defaults to the standard inner product
 
-    def call(self):
-        pass
+    def call(self, sample):
+        return self.f(sample.get())
 
     def fit(self):
         passes = 0
+
         while(passes < self.max_passes):
             num_changed_alphas = 0
+            
             for i in range(self.alpha.size):
-                Ei = self.E(i)
-                if (self.Y[i]*Ei < -self.tol and self.alpha[i] < self.C) or (self.Y[i]*Ei>self.tol and self.alpha[i]>0):
+                E_i = self.E(i)
+
+                # determining if KKT are violated
+                if ( (self.Y[i]*E_i < -self.tol and self.alpha[i] < self.C) or \
+                     (self.Y[i]*E_i > self.tol and self.alpha[i] > 0) ):
+
                     # select j != i randomly
                     j = i
                     while (j == i):
                         j = np.random.randint(0, self.alpha.size)
-                    Ej = self.E(j)
-                    aiold = self.alpha[i]
-                    ajold = self.alpha[j]
+                    E_j = self.E(j)
+                    a_i_old = self.alpha[i]
+                    a_j_old = self.alpha[j]
+
+                    # computing L and H using old alphas
+                    if (self.Y[i] != self.Y[j]):
+                        L = max( [0, self.alpha[j] - self.alpha[j]] )
+                        H = min( [self.C, self.C + self.alpha[i] + self[j]] )
+                    else:
+                        L = max( [0, self.alpha[i] + self.alpha[j] - self.C] )
+                        H = min( [self.C, self.alpha[i] - self.alpha[j]] )
+
+                    if (L == H):
+                        continue
+
+                    # get longN
+                    long_n = self.longN(i, j)
+
+                    if (long_n >= 0):
+                        continue
+                    # compute a_j
+                    a_j = self.alpha[j] - ( (self.Y[j] * (E_i - E_j)) / long_n )
+                    
+                    # clip a_j
+                    if (a_j > H):
+                        a_j = H
+                    elif ( a_j < L):
+                        a_j = L
+                    # otherwise a_j is correctly computed
+
+                    if (abs( (a_j - a_j_old) < 10**5) ):
+                        continue
+                    # define new a_i
+                    a_i = a_i_old + self.Y[i] * self.Y[j] * (a_j_old - a_j)
+                    
+                    # find b_1 and b_2
+                    b_1 = self.b - E_i - self.Y[i] * (a_i - a_i_old) * self.kernel(self.X[i], self.X[i]) -\
+                                         self.Y[j] * (a_j - a_j_old) * self.kernel(self.X[i], self.X[j])
+
+                    b_2 = self.b - E_j - self.Y[i] * (a_i - a_i_old) * self.kernel(self.X[i], self.X[j]) -\
+                                         self.Y[j] * (a_j - a_j_old) * self.kernel(self.X[j], self.X[j])
+
+                    # find b
+                    if (0 < a_i < self.C):
+                        b = b_1
+                    elif (0 < a_j < self.C):
+                        b = b_2
+                    else:
+                        b = (b_1 + b_2) / 2
+                    
+                    num_changed_alphas += 1
+            
+            if (num_changed_alphas == 0):
+                passes += 1
+            else:
+                passes = 0
+
+                    
 
 
 
@@ -43,7 +104,9 @@ class SVM(Model):
             tot += self.alpha[i]*self.Y[i]*self.kernel(self.X[i], x) + self.b
 
     def longN(self, i, j):
-        pass
+        long_n = 2* self.kernel(self.X[i], self.X[j]) - self.kernel(self.X[i], self.X[i]) -\
+                                                                    self.kernel(self.X[j], self.X[i])
+        return long_n
 
     def kernel(self, x1, x2):
         """
