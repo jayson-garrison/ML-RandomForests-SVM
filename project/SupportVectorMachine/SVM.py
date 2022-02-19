@@ -42,7 +42,6 @@ class SVM(Model):
                 # determining if KKT are violated
                 if ( (self.Y[i]*E_i < -self.tol and self.alpha[i] < self.C) or \
                      (self.Y[i]*E_i > self.tol and self.alpha[i] > 0) ):
-
                     # select j != i randomly
                     j = i
                     while (j == i):
@@ -53,12 +52,11 @@ class SVM(Model):
 
                     # computing L and H using old alphas
                     if (self.Y[i] != self.Y[j]):
-                        L = max( [0, self.alpha[j] - self.alpha[i]] )
-                        H = min( [self.C, self.C + self.alpha[j] - self.alpha[i]] )
+                        L = max( [0, a_j_old - a_i_old] )
+                        H = min( [self.C, self.C + a_j_old - a_i_old] )
                     else:
-                        L = max( [0, self.alpha[i] + self.alpha[j] - self.C] )
-                        H = min( [self.C, self.alpha[i] + self.alpha[j]] )
-
+                        L = max( [0, a_i_old + a_j_old - self.C] )
+                        H = min( [self.C, a_i_old + a_j_old] )
                     if (L == H):
                         continue
 
@@ -68,7 +66,7 @@ class SVM(Model):
                     if (long_n >= 0):
                         continue
                     # compute a_j
-                    a_j = self.alpha[j] - ( (self.Y[j] * (E_i - E_j)) / long_n )
+                    a_j = a_j_old - ( (self.Y[j] * (E_i - E_j)) / long_n )
                     
                     # clip a_j
                     if (a_j > H):
@@ -77,7 +75,7 @@ class SVM(Model):
                         a_j = L
                     # otherwise a_j is correctly computed
 
-                    if (abs( (a_j - a_j_old) < 10**5) ):
+                    if (abs(a_j - a_j_old) < 10**-5):
                         continue
                     # define new a_i
                     a_i = a_i_old + self.Y[i] * self.Y[j] * (a_j_old - a_j)
@@ -115,8 +113,8 @@ class SVM(Model):
         return tot # I assume this was supposed to ret tot
 
     def longN(self, i, j):
-        long_n = 2* self.kernel(self.X[i], self.X[j]) - self.kernel(self.X[i], self.X[i]) -\
-                                                                    self.kernel(self.X[j], self.X[i])
+        long_n = 2 * self.kernel(self.X[i], self.X[j]) - self.kernel(self.X[i], self.X[i]) -\
+                                                                    self.kernel(self.X[j], self.X[j])
         return long_n
 
     def kernel(self, x1, x2):
