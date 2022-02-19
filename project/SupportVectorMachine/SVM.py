@@ -22,7 +22,7 @@ class SVM(Model):
 
         while(passes < self.max_passes):
             num_changed_alphas = 0
-            
+
             for i in range(self.alpha.size):
                 E_i = self.E(i)
 
@@ -91,17 +91,15 @@ class SVM(Model):
             else:
                 passes = 0
 
-                    
-
-
-
-    def E(self, i):
-        pass
+    def E(self, k):
+        E_k = self.f(self.X[k]) - self.Y[k]
+        return E_k
 
     def f(self, x):
         tot = 0
         for i in range(self.alpha.size):
             tot += self.alpha[i]*self.Y[i]*self.kernel(self.X[i], x) + self.b
+        return tot # I assume this was supposed to ret tot
 
     def longN(self, i, j):
         long_n = 2* self.kernel(self.X[i], self.X[j]) - self.kernel(self.X[i], self.X[i]) -\
