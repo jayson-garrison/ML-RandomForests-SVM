@@ -6,13 +6,12 @@ from Utils.PCA import *
 from Utils.helper_functions import select_attributes
 
 
-def load_email_data():
+def load_email_data(using_svm=False):
     data = pd.read_csv('./project/Datasets/spam_ham/pca_emails.csv')
     data = data.to_numpy()
     X = data[1:, 1:-1]
     #X = pca(X, 4)
     Y = data[1:, -1]
-
     #pca_emails = pd.DataFrame(np.column_stack((Y,X))) 
     #pca_emails.to_csv('pca_emails.csv')
     
@@ -38,4 +37,6 @@ def load_email_data():
                         )
     # print(f'DIMS POST PCA: {len(samples)} x {len(samples[0].getX())}')
     np.random.shuffle(samples)
+
+    if using_svm: return samples, attributes, X, Y
     return samples, attributes

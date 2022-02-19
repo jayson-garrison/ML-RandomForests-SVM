@@ -3,7 +3,7 @@ import numpy as np
 from Utils.Sample import Sample
 from Utils.Attribute import Attribute
 
-def load_artificial_data(path):
+def load_artificial_data(path, using_svm=False):
     '''
     load the artificial data set given a path
     @param path
@@ -30,4 +30,6 @@ def load_artificial_data(path):
         attributes.append(Attribute(name=key, values=attr_dict[key]))
         
     np.random.shuffle(samples)
+
+    if using_svm: return samples, attributes, X, Y
     return samples, attributes
