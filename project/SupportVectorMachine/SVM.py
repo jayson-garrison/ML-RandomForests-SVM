@@ -7,7 +7,7 @@ class SVM(Model):
         super().__init__()
         self.X = X
         self.Y = Y
-        self.alpha = np.zeroes(Y.size)
+        self.alpha = np.zeros(Y.size)
         self.b = 0
         self.C = C
         self.tol = tol

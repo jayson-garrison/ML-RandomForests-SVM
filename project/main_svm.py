@@ -9,68 +9,68 @@ import os
 
 params_blobs = [
     # params of the form (dataset name, softness constant C, tolerance tol, kernel function name)
-    ('blobs', .1, .1, 'inner_product')
-    ('blobs', .1, .1, 'gaussian')
-    ('blobs', .1, .1, 'mystery')
-    ('blobs', .1, .001, 'inner_product')
-    ('blobs', .1, .001, 'gaussian')
-    ('blobs', .1, .001, 'mystery')
-    ('blobs', 10, .1, 'inner_product')
-    ('blobs', 10, .1, 'gaussian')
-    ('blobs', 10, .1, 'mystery')
-    ('blobs', 10, .001, 'inner_product')
-    ('blobs', 10, .001, 'gaussian')
-    ('blobs', 10, .001, 'mystery')
-    ('blobs', 1000, .1, 'inner_product')
-    ('blobs', 1000, .1, 'gaussian')
-    ('blobs', 1000, .1, 'mystery')
-    ('blobs', 1000, .001, 'inner_product')
-    ('blobs', 1000, .001, 'gaussian')
-    ('blobs', 1000, .001, 'mystery')
+    ('blobs', .1, .1, 'inner_product'),
+    ('blobs', .1, .1, 'gaussian'),
+    ('blobs', .1, .1, 'mystery'),
+    ('blobs', .1, .001, 'inner_product'),
+    ('blobs', .1, .001, 'gaussian'),
+    ('blobs', .1, .001, 'mystery'),
+    ('blobs', 10, .1, 'inner_product'),
+    ('blobs', 10, .1, 'gaussian'),
+    ('blobs', 10, .1, 'mystery'),
+    ('blobs', 10, .001, 'inner_product'),
+    ('blobs', 10, .001, 'gaussian'),
+    ('blobs', 10, .001, 'mystery'),
+    ('blobs', 1000, .1, 'inner_product'),
+    ('blobs', 1000, .1, 'gaussian'),
+    ('blobs', 1000, .1, 'mystery'),
+    ('blobs', 1000, .001, 'inner_product'),
+    ('blobs', 1000, .001, 'gaussian'),
+    ('blobs', 1000, .001, 'mystery'),
 ]
 
 params_spiral = [
     # params of the form (dataset name, softness constant C, tolerance tol, kernel function name)
-    ('sprial', .1, .1, 'inner_product')
-    ('sprial', .1, .1, 'gaussian')
-    ('sprial', .1, .1, 'mystery')
-    ('sprial', .1, .001, 'inner_product')
-    ('sprial', .1, .001, 'gaussian')
-    ('sprial', .1, .001, 'mystery')
-    ('sprial', 10, .1, 'inner_product')
-    ('sprial', 10, .1, 'gaussian')
-    ('sprial', 10, .1, 'mystery')
-    ('sprial', 10, .001, 'inner_product')
-    ('sprial', 10, .001, 'gaussian')
-    ('sprial', 10, .001, 'mystery')
-    ('sprial', 1000, .1, 'inner_product')
-    ('sprial', 1000, .1, 'gaussian')
-    ('sprial', 1000, .1, 'mystery')
-    ('sprial', 1000, .001, 'inner_product')
-    ('sprial', 1000, .001, 'gaussian')
-    ('sprial', 1000, .001, 'mystery')
+    ('sprial', .1, .1, 'inner_product'),
+    ('sprial', .1, .1, 'gaussian'),
+    ('sprial', .1, .1, 'mystery'),
+    ('sprial', .1, .001, 'inner_product'),
+    ('sprial', .1, .001, 'gaussian'),
+    ('sprial', .1, .001, 'mystery'),
+    ('sprial', 10, .1, 'inner_product'),
+    ('sprial', 10, .1, 'gaussian'),
+    ('sprial', 10, .1, 'mystery'),
+    ('sprial', 10, .001, 'inner_product'),
+    ('sprial', 10, .001, 'gaussian'),
+    ('sprial', 10, .001, 'mystery'),
+    ('sprial', 1000, .1, 'inner_product'),
+    ('sprial', 1000, .1, 'gaussian'),
+    ('sprial', 1000, .1, 'mystery'),
+    ('sprial', 1000, .001, 'inner_product'),
+    ('sprial', 1000, .001, 'gaussian'),
+    ('sprial', 1000, .001, 'mystery'),
 ]
 
 params_email = [
     # params of the form (dataset name, softness constant C, tolerance tol, kernel function name)
-    ('email', .1, .1, 'inner_product')
-    ('email', .1, .1, 'gaussian')
-    ('email', .1, .1, 'mystery')
-    ('email', .1, .001, 'inner_product')
-    ('email', .1, .001, 'gaussian')
-    ('email', .1, .001, 'mystery')
-    ('email', 10, .1, 'inner_product')
-    ('email', 10, .1, 'gaussian')
-    ('email', 10, .1, 'mystery')
-    ('email', 10, .001, 'inner_product')
-    ('email', 10, .001, 'gaussian')
-    ('email', 10, .001, 'mystery')
-    ('email', 1000, .1, 'inner_product')
-    ('email', 1000, .1, 'gaussian')
-    ('email', 1000, .1, 'mystery')
-    ('email', 1000, .001, 'inner_product')
-    ('email', 1000, .001, 'gaussian')
-    ('email', 1000, .001, 'mystery')
+    ('email', .1, .1, 'inner_product'),
+    ('email', .1, .1, 'gaussian'),
+    ('email', .1, .1, 'mystery'),
+    ('email', .1, .001, 'inner_product'),
+    ('email', .1, .001, 'gaussian'),
+    ('email', .1, .001, 'mystery'),
+    ('email', 10, .1, 'inner_product'),
+    ('email', 10, .1, 'gaussian'),
+    ('email', 10, .1, 'mystery'),
+    ('email', 10, .001, 'inner_product'),
+    ('email', 10, .001, 'gaussian'),
+    ('email', 10, .001, 'mystery'),
+    ('email', 1000, .1, 'inner_product'),
+    ('email', 1000, .1, 'gaussian'),
+    ('email', 1000, .1, 'mystery'),
+    ('email', 1000, .001, 'inner_product'),
+    ('email', 1000, .001, 'gaussian'),
+    ('email', 1000, .001, 'mystery'),
 ]
 
 
@@ -116,7 +116,7 @@ if __name__ == "__main__":
                           max_passes=3, 
                           k=hyper_parameters['kernel'])
 
-                output = make_output_strings_svm(dataset, svm, attributes)
+                output = make_output_strings_svm(dataset, svm) # had svm as second arg
                 for line in output:
                     log.write(line)
                 log.close()
