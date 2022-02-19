@@ -105,6 +105,7 @@ if __name__ == "__main__":
     ]
     
     for params in params_image:
+        params = (4, gini, 'gini', 'image', 2)
         hyper_parameters = {
             'mdt': params[0], # Max depth of the tree
             'h': params[1], # The evaluation function
@@ -143,6 +144,7 @@ if __name__ == "__main__":
                 for line in output:
                     log.write(line)
                 log.close()
+                exit()
 
     if generate_visuals:
         log_list1 = [
@@ -156,3 +158,4 @@ if __name__ == "__main__":
         for file in os.listdir(log_dir):
             visualize_log(list(file), 'DataSet_spiral/',file)
         # visualize_log(filename)
+        
