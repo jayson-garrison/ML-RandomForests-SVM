@@ -99,13 +99,24 @@ if __name__ == "__main__":
                 log.write('num,train1,train2,train3,train4,train5,test1,test2,test3,test4,test5\n')
 
                 if hyper_parameters['dataset'] == 'blobs':
-                    dataset, attributes = load_artificial_data('./project/Datasets/artificial_datasets/dataset/blobs.csv')
+                    dataset, attributes, X, Y = load_artificial_data('./project/Datasets/artificial_datasets/dataset/blobs.csv', using_svm=True)
                 elif hyper_parameters['dataset'] == 'spiral':
-                    dataset, attributes = load_artificial_data('./project/Datasets/artificial_datasets/dataset/spirals.csv')
+                    dataset, attributes, X, Y = load_artificial_data('./project/Datasets/artificial_datasets/dataset/spirals.csv', using_svm=True)
                 elif hyper_parameters['dataset'] == 'email':
-                    dataset, attributes = load_email_data()
+                    dataset, attributes, X, Y = load_email_data(using_svm=True)
                 else:
                     print('No data set given..')
                     exit()
 
-                svm = SVM()
+                # RECALL: __init__(self, X, Y, C, tol, max_passes, k='inner_product')
+                svm = SVM(X=X, 
+                          Y=Y, 
+                          C=hyper_parameters['C'], 
+                          tol=hyper_parameters['tol'], 
+                          max_passes=3, 
+                          k=hyper_parameters['kernel'])
+
+                output = make_output_strings_svm(dataset, svm, attributes)
+                for line in output:
+                    log.write(line)
+                log.close()

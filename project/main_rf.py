@@ -140,7 +140,7 @@ if __name__ == "__main__":
                 else:
                     print('No data set given..')
                     exit()
-                output = make_output_strings(dataset, rf, attributes)
+                output = make_output_strings_rf(dataset, rf, attributes)
                 for line in output:
                     log.write(line)
                 log.close()
