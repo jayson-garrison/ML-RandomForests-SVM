@@ -17,8 +17,7 @@ class SVM(Model):
     def save(self):
         w = np.zeros(self.X[0].size)
         for i in range(self.alpha.size):
-            temp = self.alpha[i] * self.Y[i] * self.X[i]
-            w += temp
+            w += self.alpha[i] * self.Y[i] * self.X[i]
         info = {
             'w': w,
             'b': self.b
@@ -35,7 +34,6 @@ class SVM(Model):
 
         while(passes < self.max_passes):
             num_changed_alphas = 0
-
             for i in range(self.alpha.size):
                 E_i = self.E(i)
 
@@ -89,16 +87,14 @@ class SVM(Model):
 
                     # find b
                     if (0 < a_i < self.C):
-                        b = b_1
+                        self.b = b_1
                     elif (0 < a_j < self.C):
-                        b = b_2
+                        self.b = b_2
                     else:
-                        b = (b_1 + b_2) / 2
-
-                    self.b = b
+                        self.b = (b_1 + b_2) / 2
+                    
                     self.alpha[i] = a_i
                     self.alpha[j] = a_j
-
                     num_changed_alphas += 1
             
             if (num_changed_alphas == 0):
