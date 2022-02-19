@@ -9,11 +9,7 @@ import os
 
 params_blobs = [
     # params of the form (dataset name, softness constant C, tolerance tol, kernel function name)
-<<<<<<< HEAD
-    ('blobs', .00001, .1, 'inner_product'),
-=======
-    ('blobs', .001, .1, 'inner_product'),
->>>>>>> b82aa9fcf99424d38d4aacbff7b455cddcfe22d8
+    ('blobs', 10, .01, 'inner_product'),
     ('blobs', .1, .1, 'gaussian'),
     ('blobs', .1, .1, 'mystery'),
     ('blobs', .1, .001, 'inner_product'),
@@ -103,7 +99,7 @@ if __name__ == "__main__":
                 log.write('train1,train2,train3,train4,train5,test1,test2,test3,test4,test5\n')
 
                 if hyper_parameters['dataset'] == 'blobs':
-                    dataset, attributes, X, Y = load_artificial_data('./project/Datasets/artificial_datasets/dataset/toy.csv', using_svm=True)
+                    dataset, attributes, X, Y = load_artificial_data('./project/Datasets/artificial_datasets/dataset/blobs.csv', using_svm=True)
                 elif hyper_parameters['dataset'] == 'spiral':
                     dataset, attributes, X, Y = load_artificial_data('./project/Datasets/artificial_datasets/dataset/spirals.csv', using_svm=True)
                 elif hyper_parameters['dataset'] == 'email':
