@@ -42,35 +42,36 @@ if __name__ == "__main__":
         (3, entropy, 'entropy', 'spiral', 2),
         (3, gini, 'gini', 'spiral', 2),
         (3, misclassification, 'misclassification', 'spiral', 2)]
-    # Image has 3000 attributes, 4 after pca. Let M be in {2, 3, 4}
+    # Image has 3000 attributes, 10 after pca. Let M be in {2, 3, 4}
     params_image = [
-        (1, entropy, 'entropy', 'image', 2),
-        (1, entropy, 'entropy', 'image', 3),
-        (1, entropy, 'entropy', 'image', 4),
-        (1, gini, 'gini', 'image', 2),
-        (1, gini, 'gini', 'image', 3),
-        (1, gini, 'gini', 'image', 4),
-        (1, misclassification, 'misclassification', 'image', 2),
-        (1, misclassification, 'misclassification', 'image', 3),
-        (1, misclassification, 'misclassification', 'image', 4),
-        (2, entropy, 'entropy', 'image', 2),
-        (2, entropy, 'entropy', 'image', 3),
-        (2, entropy, 'entropy', 'image', 4),
-        (2, gini, 'gini', 'image', 2),
-        (2, gini, 'gini', 'image', 3),
-        (2, gini, 'gini', 'image', 4),
-        (2, misclassification, 'misclassification', 'image', 2),
-        (2, misclassification, 'misclassification', 'image', 3),
-        (2, misclassification, 'misclassification', 'image', 4),
-        (3, entropy, 'entropy', 'image', 2),
-        (3, entropy, 'entropy', 'image', 3),
-        (3, entropy, 'entropy', 'image', 4),
-        (3, gini, 'gini', 'image', 2),
-        (3, gini, 'gini', 'image', 3),
-        (3, gini, 'gini', 'image', 4),
-        (3, misclassification, 'misclassification', 'image', 2),
-        (3, misclassification, 'misclassification', 'image', 3),
-        (3, misclassification, 'misclassification', 'image', 4),
+        (4, entropy, 'entropy', 'image', 2),
+        (4, entropy, 'entropy', 'image', 3),
+        (4, entropy, 'entropy', 'image', 4),
+        (4, gini, 'gini', 'image', 2),
+        (4, gini, 'gini', 'image', 3),
+        (4, gini, 'gini', 'image', 4),
+        (4, misclassification, 'misclassification', 'image', 2),
+        (4, misclassification, 'misclassification', 'image', 3),
+        (4, misclassification, 'misclassification', 'image', 4),
+
+        # (5, entropy, 'entropy', 'image', 2),
+        # (5, entropy, 'entropy', 'image', 3),
+        # (5, entropy, 'entropy', 'image', 4),
+        # (5, gini, 'gini', 'image', 2),
+        # (5, gini, 'gini', 'image', 3),
+        # (5, gini, 'gini', 'image', 4),
+        # (5, misclassification, 'misclassification', 'image', 2),
+        # (5, misclassification, 'misclassification', 'image', 3),
+        # (5, misclassification, 'misclassification', 'image', 4),
+        # (6, entropy, 'entropy', 'image', 2),
+        # (6, entropy, 'entropy', 'image', 3),
+        # (6, entropy, 'entropy', 'image', 4),
+        # (6, gini, 'gini', 'image', 2),
+        # (6, gini, 'gini', 'image', 3),
+        # (6, gini, 'gini', 'image', 4),
+        # (6, misclassification, 'misclassification', 'image', 2),
+        # (6, misclassification, 'misclassification', 'image', 3),
+        # (6, misclassification, 'misclassification', 'image', 4),
     ]
     # Mail has 256 attributes, 4 after pca. Let M be in {2, 3, 4}
     params_mail = [
@@ -105,7 +106,7 @@ if __name__ == "__main__":
     ]
     
     for params in params_image:
-        params = (4, gini, 'gini', 'image', 2)
+        # params = (5, gini, 'gini', 'image', 2)
         hyper_parameters = {
             'mdt': params[0], # Max depth of the tree
             'h': params[1], # The evaluation function
@@ -144,7 +145,7 @@ if __name__ == "__main__":
                 for line in output:
                     log.write(line)
                 log.close()
-                exit()
+                # exit()
 
     if generate_visuals:
         log_list1 = [
