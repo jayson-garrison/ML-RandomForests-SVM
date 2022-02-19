@@ -96,7 +96,7 @@ if __name__ == "__main__":
         if run_analysis:
             os.makedirs(os.path.dirname(filename), exist_ok=True)
             with open(filename, 'w') as log:
-                log.write('num,train1,train2,train3,train4,train5,test1,test2,test3,test4,test5\n')
+                log.write('train1,train2,train3,train4,train5,test1,test2,test3,test4,test5\n')
 
                 if hyper_parameters['dataset'] == 'blobs':
                     dataset, attributes, X, Y = load_artificial_data('./project/Datasets/artificial_datasets/dataset/blobs.csv', using_svm=True)
@@ -120,3 +120,4 @@ if __name__ == "__main__":
                 for line in output:
                     log.write(line)
                 log.close()
+                exit()

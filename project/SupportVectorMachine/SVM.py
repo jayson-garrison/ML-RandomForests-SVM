@@ -14,8 +14,21 @@ class SVM(Model):
         self.max_passes = max_passes
         self.k = k # The kernel function, defaults to the standard inner product
 
+    def save(self):
+        w = np.zeros(self.X[0].size)
+        for i in range(w.size):
+            temp = self.alpha[i] * self.Y[i] * self.X[i]
+            w += temp
+        info = {
+            'w': w,
+            'b': self.b
+        }
+        return info
+
     def call(self, sample):
-        return self.f(sample.get())
+        guess = self.f(sample.getX())
+        if guess < 0: return -1
+        return 1
 
     def fit(self):
         passes = 0
@@ -40,11 +53,11 @@ class SVM(Model):
 
                     # computing L and H using old alphas
                     if (self.Y[i] != self.Y[j]):
-                        L = max( [0, self.alpha[j] - self.alpha[j]] )
-                        H = min( [self.C, self.C + self.alpha[i] + self[j]] )
+                        L = max( [0, self.alpha[j] - self.alpha[i]] )
+                        H = min( [self.C, self.C + self.alpha[j] - self.alpha[i]] )
                     else:
                         L = max( [0, self.alpha[i] + self.alpha[j] - self.C] )
-                        H = min( [self.C, self.alpha[i] - self.alpha[j]] )
+                        H = min( [self.C, self.alpha[i] + self.alpha[j]] )
 
                     if (L == H):
                         continue

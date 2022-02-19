@@ -1,0 +1,2 @@
+train1,train2,train3,train4,train5,test1,test2,test3,test4,test5
+77.5,79.5,80.5,81.0,82.0,22.5,20.5,19.5,19.0,18.0,
