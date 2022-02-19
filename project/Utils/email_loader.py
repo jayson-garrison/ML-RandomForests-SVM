@@ -15,6 +15,7 @@ def load_email_data():
     samples = list()
     attr_dict = dict()
     for i in range(int(len(X))):
+        if Y[i] == 0: Y[i] = -1 # NOTE: This change is necessary for SVM
         sample = Sample(label=Y[i], X=X[i])
         samples.append(sample)
 

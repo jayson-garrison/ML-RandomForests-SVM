@@ -66,7 +66,7 @@ class SVM(Model):
             sigma_sq = .25 # TODO sigma_sq could be a hyperparameter as it is constant within the routine
             nrm = norm(x1-x2, 1) # compute the 1 norm of the vectors
             return np.exp(-np.square(nrm)/sigma_sq)
-        elif self.k == 'myst':
+        elif self.k == 'mystery':
             c = 1 # TODO 1. I don't know a good value for c, and 2. c could be a hyperparameter
             return np.square(np.dot(x1, x2) + c)
     
