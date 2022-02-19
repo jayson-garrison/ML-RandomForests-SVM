@@ -4,13 +4,17 @@ import time
 def pca(array, n): # take in an array, return a transformed array with n dimensions
     start = time.time()
     print("Entering PCA ... ", end='')
+    print(f"Standardizing {int(time.time()-start)} ... ", end='')
     array = standardize(array)
+    print(f"Finding Covariance {int(time.time()-start)} ... ", end='')
     cov = np.cov(array.T)
+    print(f"Finding Eigens {int(time.time()-start)} ... ", end='')
     eigen_values, eigen_vectors = np.linalg.eig(cov)
-    projection_matrix = (eigen_vectors.T[:][:n]).T
-    X_pca = array.dot(projection_matrix)
-    print(f'Exiting PCA, Elapsed Time: {time.time()-start}')
-    return X_pca
+    print(f"Projecting {int(time.time()-start)} ... ", end='')
+    projector = (eigen_vectors.T[:][:n]).T
+    projected = array.dot(projector)
+    print(f'Exiting PCA, Total Elapsed Time: {time.time()-start}')
+    return projected
 
 def standardize(array): # take in an array and for every standardize every feature dimension
     rows, columns = array.shape
@@ -21,7 +25,7 @@ def standardize(array): # take in an array and for every standardize every featu
     for column in range(columns):
         
         mean = np.mean(array[:,column])
-        std = np.std(array[:,column])
+        std = max(np.std(array[:,column]), .001)
         tempArray = np.empty(0)
         
         for element in array[:,column]:
