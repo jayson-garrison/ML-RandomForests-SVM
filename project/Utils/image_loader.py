@@ -10,11 +10,12 @@ def load_image_data():
     data = pd.read_csv('./project/Datasets/mnist/pca_image_20k_dim10.csv')
     data = data.to_numpy()
     np.random.shuffle(data)
-    indeces = set()
-    while len(indeces) < 20000:
-        indeces.add(np.random.randint(0, 42000))
-    indeces = list(indeces)
-    indeces.sort()
+
+    # indeces = set()
+    # while len(indeces) < 20000:
+    #     indeces.add(np.random.randint(0, 42000))
+    # indeces = list(indeces)
+    # indeces.sort()
 
     # reading a pca file
     X = data[1:, 2:]
