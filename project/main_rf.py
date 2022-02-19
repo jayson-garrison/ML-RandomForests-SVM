@@ -105,13 +105,14 @@ if __name__ == "__main__":
     ]
     
     for params in params_image:
+        params = (4, gini, 'gini', 'image', 2)
         hyper_parameters = {
             'mdt': params[0], # Max depth of the tree
             'h': params[1], # The evaluation function
             'hname': params[2], # String name of the evaluation function
             'dataset': params[3], # data sets, 0: blob, 1: spiral, 2: mail, 3: image
             'M': params[4], # the number of Attributes considered at each node during tree construction
-            'nt': 1 # the total number of trees in the forest
+            'nt': 150 # the total number of trees in the forest
         }
         filename = 'project/Logs/RF/DataSet_'+str(hyper_parameters['dataset'])+'/'+\
                                 '_NumTrees-'+str(hyper_parameters['nt'])+\
@@ -143,6 +144,7 @@ if __name__ == "__main__":
                 for line in output:
                     log.write(line)
                 log.close()
+                exit()
 
     if generate_visuals:
         log_list1 = [
@@ -156,3 +158,4 @@ if __name__ == "__main__":
         for file in os.listdir(log_dir):
             visualize_log(list(file), 'DataSet_spiral/',file)
         # visualize_log(filename)
+        

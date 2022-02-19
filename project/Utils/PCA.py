@@ -25,7 +25,7 @@ def standardize(array): # take in an array and for every standardize every featu
     for column in range(columns):
         
         mean = np.mean(array[:,column])
-        std = np.std(array[:,column])
+        std = max(np.std(array[:,column]), .001)
         tempArray = np.empty(0)
         
         for element in array[:,column]:
