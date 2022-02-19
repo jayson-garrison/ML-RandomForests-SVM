@@ -16,7 +16,7 @@ class SVM(Model):
 
     def save(self):
         w = np.zeros(self.X[0].size)
-        for i in range(w.size):
+        for i in range(self.alpha.size):
             temp = self.alpha[i] * self.Y[i] * self.X[i]
             w += temp
         info = {
@@ -94,7 +94,11 @@ class SVM(Model):
                         b = b_2
                     else:
                         b = (b_1 + b_2) / 2
-                    
+
+                    self.b = b
+                    self.alpha[i] = a_i
+                    self.alpha[j] = a_j
+
                     num_changed_alphas += 1
             
             if (num_changed_alphas == 0):
