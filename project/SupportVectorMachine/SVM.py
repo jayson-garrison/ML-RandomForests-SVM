@@ -35,7 +35,6 @@ class SVM(Model):
 
         while(passes < self.max_passes):
             num_changed_alphas = 0
-
             for i in range(self.alpha.size):
                 E_i = self.E(i)
 
