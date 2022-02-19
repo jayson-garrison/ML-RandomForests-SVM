@@ -100,7 +100,7 @@ if __name__ == "__main__":
         
     ]
     
-    for params in params_image:
+    for params in params_mail:
         hyper_parameters = {
             'mdt': params[0], # Max depth of the tree
             'h': params[1], # The evaluation function
