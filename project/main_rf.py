@@ -105,7 +105,7 @@ if __name__ == "__main__":
         
     ]
     
-    for params in params_mail:
+    for params in params_image:
         # params = (3, gini, 'gini', 'mail', 2)
         hyper_parameters = {
             'mdt': params[0], # Max depth of the tree
