@@ -80,6 +80,7 @@ if __name__ == "__main__":
 
     for params in params_blobs:
         # params of the form (dataset name, softness constant C, tolerance tol, kernel function name)
+        # params = ('blobs', 10, .01, 'inner_product') # for testing
         hyper_parameters = {
             'dataset': params[0], 
             'C': params[1],

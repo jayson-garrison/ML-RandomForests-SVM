@@ -31,6 +31,7 @@ class SVM(Model):
 
     def fit(self):
         passes = 0
+        log_vals = False
 
         while(passes < self.max_passes):
             num_changed_alphas = 0
@@ -40,6 +41,8 @@ class SVM(Model):
                 # determining if KKT are violated
                 if ( (self.Y[i]*E_i < -self.tol and self.alpha[i] < self.C) or \
                      (self.Y[i]*E_i > self.tol and self.alpha[i] > 0) ):
+
+                    if log_vals: print(f'E_i={round(E_i, 4)} ', end='')
                     # select j != i randomly
                     j = i
                     while (j == i):
@@ -47,6 +50,9 @@ class SVM(Model):
                     E_j = self.E(j)
                     a_i_old = self.alpha[i]
                     a_j_old = self.alpha[j]
+                    if log_vals: print(f'E_j={round(E_j, 4)} ', end='')
+                    if log_vals: print(f'a_i_old={round(a_i_old, 4)} ', end='')
+                    if log_vals: print(f'a_jold={round(a_j_old, 4)} ', end='')
 
                     # computing L and H using old alphas
                     if (self.Y[i] != self.Y[j]):
@@ -56,12 +62,15 @@ class SVM(Model):
                         L = max( [0, a_i_old + a_j_old - self.C] )
                         H = min( [self.C, a_i_old + a_j_old] )
                     if (L == H):
+                        if log_vals: print()
                         continue
 
                     # get longN
                     long_n = self.longN(i, j)
+                    if log_vals: print(f'long_n={round(long_n, 4)} ', end='')
 
                     if (long_n >= 0):
+                        if log_vals: print()
                         continue
                     # compute a_j
                     a_j = a_j_old - ( (self.Y[j] * (E_i - E_j)) / long_n )
@@ -74,9 +83,12 @@ class SVM(Model):
                     # otherwise a_j is correctly computed
 
                     if (abs(a_j - a_j_old) < 10**-5):
+                        if log_vals: print()
                         continue
                     # define new a_i
                     a_i = a_i_old + self.Y[i] * self.Y[j] * (a_j_old - a_j)
+                    if log_vals: print(f'a_i={round(a_i, 4)} ', end='')
+                    if log_vals: print(f'a_j={round(a_j, 4)} ', end='')
                     
                     # find b_1 and b_2
                     b_1 = self.b - E_i - self.Y[i] * (a_i - a_i_old) * self.kernel(self.X[i], self.X[i]) -\
@@ -92,6 +104,9 @@ class SVM(Model):
                         self.b = b_2
                     else:
                         self.b = (b_1 + b_2) / 2
+                    if log_vals: print(f'b_1={round(b_1, 4)} ', end='')
+                    if log_vals: print(f'b_2={round(b_2, 4)} ', end='')
+                    if log_vals: print(f'b={round(self.b, 4)}')
                     
                     self.alpha[i] = a_i
                     self.alpha[j] = a_j
@@ -107,9 +122,10 @@ class SVM(Model):
         return E_k
 
     def f(self, x):
-        tot = 0
+        # TODO add self.b in every iteration?
+        tot = self.b
         for i in range(self.alpha.size):
-            tot += self.alpha[i]*self.Y[i]*self.kernel(self.X[i], x) + self.b
+            tot += self.alpha[i]*self.Y[i]*self.kernel(self.X[i], x)
         return tot # I assume this was supposed to ret tot
 
     def longN(self, i, j):
