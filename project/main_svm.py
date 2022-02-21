@@ -9,7 +9,7 @@ import os
 
 params_blobs = [
     # params of the form (dataset name, softness constant C, tolerance tol, kernel function name)
-    ('blobs', 10, .01, 'inner_product'),
+    ('blobs', .1, .1, 'inner_product'),
     ('blobs', .1, .1, 'gaussian'),
     ('blobs', .1, .1, 'mystery'),
     ('blobs', .1, .001, 'inner_product'),
