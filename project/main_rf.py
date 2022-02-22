@@ -16,8 +16,8 @@ if __name__ == "__main__":
     # print(np.column_stack((y, x)))
     # exit()
 
-    run_analysis = True
-    generate_visuals = False
+    run_analysis = False
+    generate_visuals = True
 
     # Blobs only has two attributes, M=2 always
     params_blobs = [
@@ -153,10 +153,30 @@ if __name__ == "__main__":
             '_NumTrees-150_MaxDepth-3_InfoGain-gini_M-2.txt',
             '_NumTrees-150_MaxDepth-3_InfoGain-misclassification_M-2.txt'
         ]
-        visualize_log(log_list1, 'DataSet_spiral/', 'Performance on Depth 3 on Spirals')
-        #exit()
-        log_dir = 'project/Logs/RF/DataSet_spiral/'
+        log_list_image1 = [
+            'DataSet_image/_NumTrees-150_MaxDepth-5_InfoGain-entropy_M-3.txt',
+            'DataSet_image/_NumTrees-150_MaxDepth-5_InfoGain-gini_M-3.txt',
+            'DataSet_image/_NumTrees-150_MaxDepth-5_InfoGain-misclassification_M-3.txt'
+        ]
+        log_list_image2 = [
+            'DataSet_image/_NumTrees-150_MaxDepth-6_InfoGain-entropy_M-3.txt',
+            'DataSet_image/_NumTrees-150_MaxDepth-6_InfoGain-gini_M-3.txt',
+            'DataSet_image/_NumTrees-150_MaxDepth-6_InfoGain-misclassification_M-3.txt'
+        ]
+        log_list_mail1 = [
+            'DataSet_mail/_NumTrees-150_MaxDepth-3_InfoGain-entropy_M-2.txt',
+            'DataSet_mail/_NumTrees-150_MaxDepth-3_InfoGain-gini_M-2.txt',
+            'DataSet_mail/_NumTrees-150_MaxDepth-3_InfoGain-misclassification_M-2.txt'
+        ]
+        log_list_mail2 = [
+            'DataSet_mail/_NumTrees-150_MaxDepth-3_InfoGain-entropy_M-4.txt',
+            'DataSet_mail/_NumTrees-150_MaxDepth-3_InfoGain-gini_M-4.txt',
+            'DataSet_mail/_NumTrees-150_MaxDepth-3_InfoGain-misclassification_M-4.txt'
+        ]
+        visualize_log(log_list_mail2, 'DataSet_mail/', 'Performance on Depth 3 and M=4 on Mail')
+        exit()
+        log_dir = 'project/Logs/RF/'
         for file in os.listdir(log_dir):
-            visualize_log(list(file), 'DataSet_spiral/',file)
+            visualize_log(list(file), 'DataSet_image/',file)
         # visualize_log(filename)
         
