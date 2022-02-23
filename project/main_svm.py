@@ -54,12 +54,6 @@ params_spiral = [
 params_email = [
     # params of the form (dataset name, softness constant C, tolerance tol, kernel function name)
     ('email', .1, .1, 'inner_product'),
-    ('email', .1, .1, 'gaussian'),
-    ('email', .1, .1, 'mystery'),
-    ('email', .1, .001, 'inner_product'),
-    ('email', .1, .001, 'gaussian'),
-    ('email', .1, .001, 'mystery'),
-    ('email', 10, .1, 'inner_product'),
     ('email', 10, .1, 'gaussian'),
     ('email', 10, .1, 'mystery'),
     ('email', 10, .001, 'inner_product'),
@@ -78,9 +72,9 @@ if __name__ == "__main__":
     run_analysis = True
     generate_visuals = False
 
-    for params in params_blobs:
+    for params in params_email:
         # params of the form (dataset name, softness constant C, tolerance tol, kernel function name)
-        # params = ('blobs', 10, .01, 'inner_product') # for testing
+        params = ('email', 10, .01, 'gaussian') # for testing
         hyper_parameters = {
             'dataset': params[0], 
             'C': params[1],
@@ -110,15 +104,15 @@ if __name__ == "__main__":
                     exit()
 
                 # RECALL: __init__(self, X, Y, C, tol, max_passes, k='inner_product')
-                svm = SVM(X=X, 
-                          Y=Y, 
-                          C=hyper_parameters['C'], 
+                svm = SVM(C=hyper_parameters['C'], 
                           tol=hyper_parameters['tol'], 
                           max_passes=3, 
                           k=hyper_parameters['kernel'])
 
-                output = make_output_strings_svm(dataset, svm) # had svm as second arg
+                output = make_output_strings_svm(X, Y, svm) # had svm as second arg
                 for line in output:
                     log.write(line)
                 log.close()
                 exit()
+                
+                

@@ -1,14 +1,11 @@
+from cmath import inf
 from Utils.Model import Model
 import numpy as np
 from numpy.linalg import norm
 
 class SVM(Model):
-    def __init__(self, X, Y, C, tol, max_passes, k='inner_product'):
+    def __init__(self, C, tol, max_passes, k='inner_product'):
         super().__init__()
-        self.X = X
-        self.Y = Y
-        self.alpha = np.zeros(Y.size)
-        self.b = 0
         self.C = C
         self.tol = tol
         self.max_passes = max_passes
@@ -24,14 +21,20 @@ class SVM(Model):
         }
         return info
 
-    def call(self, sample):
-        guess = self.f(sample.getX())
+    def call(self, x):
+        guess = self.f(x)
         if guess < 0: return -1
         return 1
 
-    def fit(self):
+    def fit(self, X, Y):
+        self.X = X
+        self.Y = Y
+        self.alpha = np.zeros(Y.size)
+        self.b = 0
+
         passes = 0
         log_vals = False
+        prevent_overflow = True
 
         while(passes < self.max_passes):
             num_changed_alphas = 0
@@ -56,14 +59,26 @@ class SVM(Model):
 
                     # computing L and H using old alphas
                     if (self.Y[i] != self.Y[j]):
-                        L = max( [0, a_j_old - a_i_old] )
-                        H = min( [self.C, self.C + a_j_old - a_i_old] )
+                        # L = max( [0, a_j_old - a_i_old] )
+                        # H = min( [self.C, self.C + a_j_old - a_i_old] )
+                        L = 0 if 0 > (a_j_old - a_i_old) else (a_j_old - a_i_old)
+                        if L > self.C: L = self.C
+                        H = self.C if self.C < self.C + a_j_old - a_i_old else self.C + a_j_old - a_i_old
+                        if H < 0: H = 0
                     else:
-                        L = max( [0, a_i_old + a_j_old - self.C] )
-                        H = min( [self.C, a_i_old + a_j_old] )
+                        # L = max( [0, a_i_old + a_j_old - self.C] )
+                        # H = min( [self.C, a_i_old + a_j_old] )
+                        L = 0 if 0 > (a_i_old + a_j_old - self.C) else (a_i_old + a_j_old - self.C)
+                        if L > self.C: L = self.C
+                        H = self.C if self.C < (a_i_old + a_j_old) else (a_i_old + a_j_old)
+                        if H < 0: H = 0
                     if (L == H):
                         if log_vals: print()
                         continue
+
+                    if L>self.C or H<0:
+                        print(f'\n\na_i_old:{a_i_old}\na_j_old:{a_j_old}\nL:{L}\nH:{H}')
+                        exit()
 
                     # get longN
                     long_n = self.longN(i, j)
@@ -78,8 +93,12 @@ class SVM(Model):
                     # clip a_j
                     if (a_j > H):
                         a_j = H
+                        if log_vals: print(f" a_j was CLIPPED TO H={H} ", end='')
                     elif ( a_j < L):
                         a_j = L
+                        if log_vals: print(f" a_j was CLIPPED TO L={L} ", end='')
+                    else:
+                        if log_vals: print(" a_j was UNCLIPPED", end='')
                     # otherwise a_j is correctly computed
 
                     if (abs(a_j - a_j_old) < 10**-5):
@@ -107,6 +126,15 @@ class SVM(Model):
                     if log_vals: print(f'b_1={round(b_1, 4)} ', end='')
                     if log_vals: print(f'b_2={round(b_2, 4)} ', end='')
                     if log_vals: print(f'b={round(self.b, 4)}')
+                    if log_vals or prevent_overflow: 
+                        if (abs(E_i)  >= 100000 or \
+                            abs(E_j)  >= 100000 or \
+                            abs(a_i)  >= 100000 or \
+                            abs(a_j)  >= 100000 or \
+                            abs(long_n) >= 100000):
+                            print(f'OVERFLOW:')
+                            print(f'\n\na_i_old:{a_i_old}\na_j_old:{a_j_old}\nL:{L}\nH:{H}')
+                            exit()
                     
                     self.alpha[i] = a_i
                     self.alpha[j] = a_j
@@ -132,6 +160,10 @@ class SVM(Model):
         long_n = 2 * self.kernel(self.X[i], self.X[j]) - self.kernel(self.X[i], self.X[i]) -\
                                                                     self.kernel(self.X[j], self.X[j])
         return long_n
+
+    def reset(self):
+        self.alpha = np.zeros(self.Y.size)
+        self.b = 0
 
     def kernel(self, x1, x2):
         """

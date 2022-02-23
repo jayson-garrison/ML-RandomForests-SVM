@@ -12,10 +12,8 @@ import time
 # five fold data partition
 def five_fold(data_set):
     """[summary]
-
     Args:
         data_set (List of Sample objects): The Samples to be partitioned
-
     Returns:
         fold: where fold is list of len n in n-fold of (train,test) where train and test are lists of Samples
     """
@@ -33,6 +31,7 @@ def five_fold(data_set):
         s += partition_index
 
     return fold
+
 
 
 def make_output_strings_rf(dataset, model, attributes):
@@ -89,28 +88,35 @@ def make_output_strings_rf(dataset, model, attributes):
     return output
 
 
-# NOTE: please ignore the fact that this is a virtual copy of make_output_strings_rf()
-def make_output_strings_svm(dataset, model):
-    fold = five_fold(dataset)
+def five_fold_svm(matrix):
+    matrix = np.split(matrix, 5)
+    return matrix
+
+
+# NOTE: necessarily different from make_output_strings_rf
+def make_output_strings_svm(X, Y, model):
+    fold = five_fold_svm(np.column_stack((Y, X)))
     output = ''
     fold_ctr = 0
     training_accuracies = [0 for _ in range(5)]
     testing_accracies = [0 for _ in range(5)]
 
-    for partition in fold:
+    for yx in fold:
+        y = yx[:, 0]
+        x = yx[:, 1:]
         start = time.time()
         fold_ctr += 1
         print(f'Fitting model [{fold_ctr}/5]', end=' ... ')
-        model.fit()
+        model.fit(x, y)
         print(f'Elapsed Time: {time.time()-start}')
         start = time.time()
         print(f'Validating model [{fold_ctr}/5]', end=' ... ')
         # First compute the training accuracies
         correct = 0
         total = 0
-        for sample in partition[0]:
-            prediction = model.call(sample) 
-            label = sample.getLabel()
+        for idx in range(len(y)):
+            prediction = model.call(x[idx]) 
+            label = y[idx]
             if label == prediction:
                 correct += 1
             total += 1
@@ -120,9 +126,9 @@ def make_output_strings_svm(dataset, model):
         # Now compute the testing accuracies
         correct = 0
         total = 0
-        for sample in partition[1]:
-            prediction = model.call(sample)
-            label = sample.getLabel()
+        for idx in range(len(y)):
+            prediction = model.call(x[idx]) 
+            label = y[idx]
             if label == prediction:
                 correct += 1
             total += 1

@@ -16,6 +16,7 @@ def pca(array, n): # take in an array, return a transformed array with n dimensi
     print(f'Exiting PCA, Total Elapsed Time: {time.time()-start}')
     return projected
 
+
 def standardize(array): # take in an array and for every standardize every feature dimension
     rows, columns = array.shape
     
@@ -34,4 +35,23 @@ def standardize(array): # take in an array and for every standardize every featu
         standardizedArray[:,column] = tempArray
     
     return standardizedArray
+
+
+def norm_0_1(matrix): # take in an array and normalize every feature dimension to 0_1
+    rows, columns = matrix.shape
+    
+    normalizedArray = np.zeros(shape=(rows, columns))
+    
+    for column in range(columns):
+        cmax = np.max(matrix[:,column])
+        cmin = np.min(matrix[:,column])
+        tempCol = np.empty(0)
+        for element in matrix[:,column]:
+            tempCol = np.append(tempCol, ((element - cmin) / (cmax - cmin)))
+ 
+        normalizedArray[:,column] = tempCol
+    
+    return normalizedArray
+
+
 
