@@ -1,3 +1,4 @@
+from math import remainder
 import pandas as pd
 import numpy as np
 from Utils.Sample import Sample
@@ -15,7 +16,12 @@ def load_artificial_data(path, using_svm=False):
     Y = data[1:, -1]
     samples = list()
     attr_dict = dict()
-    for i in range(len(X)):
+    
+    remainder = len(X)%5
+    count = len(X) - remainder
+    X = X[:count]
+    Y = Y[:count]
+    for i in range(count):
         if Y[i] == 0: Y[i] = -1 # NOTE: This change is necessary for SVM
         sample = Sample(label=Y[i], X=X[i])
         samples.append(sample)

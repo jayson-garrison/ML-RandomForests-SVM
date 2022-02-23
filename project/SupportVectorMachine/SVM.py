@@ -35,6 +35,7 @@ class SVM(Model):
         passes = 0
         log_vals = False
         prevent_overflow = True
+        overflow_threshold = 10**9
 
         while(passes < self.max_passes):
             num_changed_alphas = 0
@@ -127,11 +128,11 @@ class SVM(Model):
                     if log_vals: print(f'b_2={round(b_2, 4)} ', end='')
                     if log_vals: print(f'b={round(self.b, 4)}')
                     if log_vals or prevent_overflow: 
-                        if (abs(E_i)  >= 100000 or \
-                            abs(E_j)  >= 100000 or \
-                            abs(a_i)  >= 100000 or \
-                            abs(a_j)  >= 100000 or \
-                            abs(long_n) >= 100000):
+                        if (abs(E_i)  >= overflow_threshold or \
+                            abs(E_j)  >= overflow_threshold or \
+                            abs(a_i)  >= overflow_threshold or \
+                            abs(a_j)  >= overflow_threshold or \
+                            abs(long_n) >= overflow_threshold):
                             print(f'OVERFLOW:')
                             print(f'\n\na_i_old:{a_i_old}\na_j_old:{a_j_old}\nL:{L}\nH:{H}')
                             exit()
