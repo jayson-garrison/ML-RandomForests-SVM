@@ -7,32 +7,33 @@ from Utils.PCA import pca
 
 def load_image_data():
     # Restructure the data so that |X| is 255 (one feature for each intensity) and x_i is the count for the ith intensity in the image X_i
-    data = pd.read_csv('./project/Datasets/mnist/train.csv')
+    data = pd.read_csv('./project/Datasets/mnist/pca_image_20k_dim10.csv')
     data = data.to_numpy()
     np.random.shuffle(data)
-    indeces = set()
-    while len(indeces) < 20000:
-        indeces.add(np.random.randint(0, 42000))
-    indeces = list(indeces)
-    indeces.sort()
+
+    # indeces = set()
+    # while len(indeces) < 20000:
+    #     indeces.add(np.random.randint(0, 42000))
+    # indeces = list(indeces)
+    # indeces.sort()
 
     # reading a pca file
-    # X = data[1:, 2:]
-    # Y = data[1:, 1]
+    X = data[1:, 2:]
+    Y = data[1:, 1]
 
     # reading original file
-    X_o = data[1:, 1:]
-    Y_o = data[1:, 0]
+    # X_o = data[1:, 1:]
+    # Y_o = data[1:, 0]
 
-    # sampled
-    X = np.take(X_o, indeces, axis=0)
-    Y = np.take(Y_o, indeces, axis=0)
+    # # sampled
+    # X = np.take(X_o, indeces, axis=0)
+    # Y = np.take(Y_o, indeces, axis=0)
 
-    # pca on orig?
-    X = pca(X, 10)
+    # # pca on orig?
+    # X = pca(X, 10)
 
-    pca_emails = pd.DataFrame(np.column_stack((Y,X))) 
-    pca_emails.to_csv('pca_image_20k_dim20.csv')
+    # pca_emails = pd.DataFrame(np.column_stack((Y,X))) 
+    # pca_emails.to_csv('pca_image_20k_dim10.csv')
 
     samples = list()
     attr_dict = dict()

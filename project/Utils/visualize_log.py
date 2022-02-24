@@ -14,7 +14,7 @@ def visualize_log(log_files, data_name, graph_name):
     measures = ['Entropy', 'Gini', 'Misclassification']
     counter = 0
     for log in log_files:
-        data = pd.read_csv('project/Logs/RF/'+data_name +log)
+        data = pd.read_csv('project/Logs/RF/'+log)
         data = data.to_numpy()
         X1 = data[:, 1:6]
         Y = np.array(list(range(150))) # will need to be a variable for generality
@@ -38,7 +38,8 @@ def visualize_log(log_files, data_name, graph_name):
         plt.title(graph_name)
         plt.xlabel('Number of Trees')
         plt.ylabel('Accuracy')
-        plt.legend(bbox_to_anchor = (.5, .6))
+        #plt.legend(bbox_to_anchor = (.5, .6))
+        plt.legend()
         plt.savefig('project/Visuals/RF/'+data_name+graph_name+'.png')
         counter += 1
         #plt.show()
