@@ -134,10 +134,13 @@ def make_output_strings_svm(X, Y, model):
             total += 1
         testing_accuracy = correct/total
 
-        # print(model.save())
+        print(model.save())
+        
 
         training_accuracies[fold_ctr-1] = training_accuracy
         testing_accracies[fold_ctr-1] = testing_accuracy
+        print(f'ACCURACY: tr:{training_accuracy} te:{testing_accuracy}')
+
         print(f'Elapsed Time: {time.time()-start}')
 
     # Aggregate the column information

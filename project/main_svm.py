@@ -9,24 +9,29 @@ import os
 
 params_blobs = [
     # params of the form (dataset name, softness constant C, tolerance tol, kernel function name)
-    ('blobs', .1, .1, 'inner_product'),
-    ('blobs', .1, .1, 'gaussian'),
-    ('blobs', .1, .1, 'mystery'),
-    ('blobs', .1, .001, 'inner_product'),
-    ('blobs', .1, .001, 'gaussian'),
-    ('blobs', .1, .001, 'mystery'),
-    ('blobs', 10, .1, 'inner_product'),
-    ('blobs', 10, .1, 'gaussian'),
-    ('blobs', 10, .1, 'mystery'),
-    ('blobs', 10, .001, 'inner_product'),
-    ('blobs', 10, .001, 'gaussian'),
-    ('blobs', 10, .001, 'mystery'),
-    ('blobs', 1000, .1, 'inner_product'),
-    ('blobs', 1000, .1, 'gaussian'),
-    ('blobs', 1000, .1, 'mystery'),
-    ('blobs', 1000, .001, 'inner_product'),
-    ('blobs', 1000, .001, 'gaussian'),
-    ('blobs', 1000, .001, 'mystery'),
+    # ('blobs', .1, .1, 'inner_product'),
+    # ('blobs', .01, .1, 'gaussian'),
+    # ('blobs', .05, .1, 'gaussian'),
+    # ('blobs', .5, .1, 'gaussian'),
+    # ('blobs', 1, .1, 'gaussian'),
+    # ('blobs', 100, .1, 'gaussian'),
+    # ('blobs', 1000, .1, 'gaussian'),
+    # ('blobs', .1, .1, 'mystery'),
+    # ('blobs', .1, .001, 'inner_product'),
+    # ('blobs', .1, .001, 'gaussian'),
+    # ('blobs', .1, .001, 'mystery'),
+    # ('blobs', 10, .1, 'inner_product'),
+    # ('blobs', 10, .1, 'gaussian'),
+    # ('blobs', 10, .1, 'mystery'),
+    # ('blobs', 10, .001, 'inner_product'),
+    # ('blobs', 10, .001, 'gaussian'),
+    # ('blobs', 10, .001, 'mystery'),
+    # ('blobs', 1000, .1, 'inner_product'),
+    # ('blobs', 1000, .1, 'gaussian'),
+    # ('blobs', 1000, .1, 'mystery'),
+    # ('blobs', 1000, .001, 'inner_product'),
+    # ('blobs', 1000, .001, 'gaussian'),
+    # ('blobs', 1000, .001, 'mystery'),
 ]
 
 params_spiral = [
@@ -44,12 +49,20 @@ params_spiral = [
     # ('spiral', 10, .001, 'inner_product'),
     # ('spiral', 10, .001, 'gaussian'),
     # ('spiral', 10, .001, 'mystery'),
-    ('spiral', 10000, .01, 'inner_product'),
-    ('spiral', 10000, .01, 'gaussian'),
-    ('spiral', 10000, .01, 'mystery'),
-    ('spiral', 10000, .0001, 'inner_product'),
+    # ('spiral', 10000, .01, 'inner_product'),
+    # ('spiral', 10000, .01, 'gaussian'),
+    # ('spiral', 10000, .01, 'mystery'),
+    # ('spiral', 10000, .0001, 'inner_product'),
+    # ('spiral', 10000, .0001, 'gaussian'),
+    # ('spiral', 10000, .0001, 'mystery'),
+
+    ('spiral', .01, .0001, 'gaussian'),
+    ('spiral', .1, .0001, 'gaussian'),
+    ('spiral', 1, .0001, 'gaussian'),
+    ('spiral', 10, .0001, 'gaussian'),
+    ('spiral', 100, .0001, 'gaussian'),
+    ('spiral', 1000, .0001, 'gaussian'),
     ('spiral', 10000, .0001, 'gaussian'),
-    ('spiral', 10000, .0001, 'mystery'),
     
 ]
 
@@ -67,12 +80,19 @@ params_email = [
     # ('email', 1000, .001, 'inner_product'),
     # ('email', 1000, .001, 'gaussian'),
     # ('email', 1000, .001, 'mystery'),
-    ('email', 100000, .0001, 'inner_product'),
-    ('email', 100000, .0001, 'gaussian'),
-    ('email', 100000, .0001, 'mystery'),
-    ('email', 100000, .00001, 'inner_product'),
-    ('email', 100000, .00001, 'gaussian'),
-    ('email', 100000, .00001, 'mystery'),
+    # ('email', 100000, .0001, 'inner_product'),
+    # ('email', 100000, .0001, 'gaussian'),
+    # ('email', 100000, .0001, 'mystery'),
+    # ('email', 100000, .00001, 'inner_product'),
+    # ('email', 100000, .00001, 'gaussian'),
+    # ('email', 100000, .00001, 'mystery'),
+    ('email', .01, .0001, 'gaussian'),
+    ('email', .1, .0001, 'gaussian'),
+    ('email', 1, .0001, 'gaussian'),
+    ('email', 10, .0001, 'gaussian'),
+    ('email', 100, .0001, 'gaussian'),
+    ('email', 1000, .0001, 'gaussian'),
+    ('email', 10000, .0001, 'gaussian'),
 ]
 
 
@@ -80,9 +100,9 @@ if __name__ == "__main__":
     run_analysis = True
     generate_visuals = False
 
-    for params in params_spiral:
+    for params in params_email:
         # params of the form (dataset name, softness constant C, tolerance tol, kernel function name)
-        # params = ('email', 100, .001, 'gaussian') # for testing
+        # params = ('spiral', 10, .1, 'gaussian') # for testing
         hyper_parameters = {
             'dataset': params[0], 
             'C': params[1],

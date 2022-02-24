@@ -2,6 +2,9 @@ from cmath import inf
 from Utils.Model import Model
 import numpy as np
 from numpy.linalg import norm
+import pandas as pd
+import sys
+np.set_printoptions(threshold=sys.maxsize)
 
 class SVM(Model):
     def __init__(self, C, tol, max_passes, k='inner_product'):
@@ -145,6 +148,12 @@ class SVM(Model):
                 passes += 1
             else:
                 passes = 0
+        # pd.DataFrame(self.alpha).to_csv("alpha.csv")
+        # pd.DataFrame(self.X).to_csv("X.csv")
+        # pd.DataFrame(self.Y).to_csv("Y.csv")
+        # print(self.b)
+        # exit()
+
 
     def E(self, k):
         E_k = self.f(self.X[k]) - self.Y[k]
