@@ -145,10 +145,7 @@ if __name__ == "__main__":
                 for line in output:
                     log.write(line)
                 log.close()
-<<<<<<< HEAD
-=======
                 # exit()
->>>>>>> main
 
     if generate_visuals:
         log_list1 = [

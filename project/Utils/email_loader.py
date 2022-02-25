@@ -11,11 +11,6 @@ from Utils.helper_functions import select_attributes
 def load_email_data(using_svm=False):
     data = pd.read_csv('./project/Datasets/spam_ham/pca_emails.csv')
     data = data.to_numpy()
-<<<<<<< HEAD
-    X = data[1:, 2:]
-    #X = pca(X, 4)
-    Y = data[1:, 1]
-=======
     #X = data[1:, 1:-1]
     #X = pca(X, 4)
     # if reading pca file
@@ -25,7 +20,6 @@ def load_email_data(using_svm=False):
 
     #Y = data[1:, -1]
 
->>>>>>> main
     #pca_emails = pd.DataFrame(np.column_stack((Y,X))) 
     #pca_emails.to_csv('pca_emails.csv')
 
@@ -59,11 +53,7 @@ def load_email_data(using_svm=False):
     for key in attr_dict:
         attr_values = list(attr_dict[key])
         attributes.append(Attribute(name=key, values=select_attributes(attr_values, 
-<<<<<<< HEAD
-                                                                        min(12, len(attr_values)) # The number of attibute values to consider as possible split points.
-=======
                                                                         min(12, len(attr_values) ) # The number of attibute values to consider as possible split points.
->>>>>>> main
                                                                         )
                                     )
                         )
